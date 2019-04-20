@@ -221,7 +221,7 @@ sub myfunc(% (:%book (Str:D :$title, Str:D :$author), Int :$count,
 {...}
 ----
 
-现在，在函数体中，我可以将这些部分引用为 `$title`，`$author`，`$count`和 `@tags`。 为了方便起见，我还将标签分成了 `$first-tag` 和 `@other-tags`。
+现在，在函数体中，我可以将这些部分引用为 `$title`，`$author`，`$count` 和 `@tags`。 为了方便起见，我还将标签分成了 `$first-tag` 和 `@other-tags`。
 
 === 在块儿中使用签名
 
