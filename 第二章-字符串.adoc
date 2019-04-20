@@ -10,10 +10,9 @@
 
 === ord
 
-字符串操作
 === comb
 
-=== 普通字符
+==== 普通字符
 
 你可以把 link:http://docs.perl6.org/routine/comb[comb] 用作子例程或方法。在它的最基本的形式中， comb 会把字符串分解为字符:
 
@@ -29,7 +28,7 @@
 
 不应用任何参数的 comb 你会得到各个单独的字符。给 comb 提供一个整数 `$n`, 那么你会得到长度至多为 `$n` 个字符的一个列表，并且如果没有剩下的字符不够的话，这个列表会接收较短的这个字符串。这个方法比使用正则表快了 30 倍。
 
-=== 限制
+==== 限制
 
 你也可以为 comb 提供第二个整数参数，即 **limit**，来标示每个列表中最多含有 limit 个元素:
 
@@ -45,7 +44,7 @@
 
 这适用于使用 comb 方法/函数的所有形式，而不仅仅是上面展示的那样。
 
-=== 计数
+==== 计数
 
 comb 也接收普通的 link:http://docs.perl6.org/type/Str[Str] 作为参数，返回一个包含那个字符串的匹配的列表。所以这在计算子字符串在字符串中出现的次数时很有用。
 
@@ -59,7 +58,7 @@ comb 也接收普通的 link:http://docs.perl6.org/type/Str[Str] 作为参数，
 # 2
 ----
 
-=== 简单的匹配
+==== 简单的匹配
 
 comb 的参数也可以是一个正则表达式，整个匹配会作为一个标量被返回：
 
@@ -71,7 +70,7 @@ foobar moobar 駱駝道bar'.comb(/<[a..z]>+ 'bar'/).join('|').say;
 # foobar|moobar
 ----
 
-=== 限制所匹配的东西
+==== 限制所匹配的东西
 
 你可以使用link:http://docs.perl6.org/language/regexes#Look-around_assertions[环视断言]或者更简单的 `<(` 和 `)>` 正则表达式捕获记号:
 
@@ -87,7 +86,7 @@ foobar moobar 駱駝道bar'.comb(/<[a..z]>+ 'bar'/).join('|').say;
 
 你可以使用  `<(` 和 `)>` 两者之一或两者都使用。 `<(` 从匹配中排除任何它之前的东西而 `)>` 会排序之后的任何东西。即 `/'foo' <('bar')> 'ber'/` 会匹配包含 foobarber 的东西，但是从 comb 中返回的东西只会有 bar。
 
-=== 多个捕获
+==== 多个捕获
 
 怎么样得出 Perl 5 那样的 键/值对儿呢？
 
@@ -147,14 +146,16 @@ $str.comb: /<:alpha>+/
 
 `comb` 返回一个 Seq 序列。
 
-=== substr substr-rw  substr-eq 字符串截取
+===  字符串截取
 [source,perl6]
 .script
 ----
 
 ----
 
-=== subst subst-mutate 字符串截取
+=== 字符串替换
+
+==== subst
 
 link:https://docs.perl6.org/routine/subst[subst] 取的是单词 substitution(替换)的前5个字符, 意为替换之意。其签名为:
 
@@ -295,7 +296,7 @@ say 'meowmix'.subst: /me (.+)/, -> { "c$0" };
 
 这里，我们为我们的 **Callable** 使用了 `-> { ... }` 尖号块儿，但是 **WhateverCode** 和子例程也有效。每次替换都会调用这个 Callable，并且把 link:hhttp://docs.perl6.org/type/Match[Match] 对象作为第一个位置参数传递给 Callable， 如果你需要访问它的话。
 
-=== S///
+==== S///
 
 `S///` 操作符在 Perl 6 中是 `s///` 操作符的战友，它不是修改原来的字符串，而是拷贝原来的字符串，修改，然后返回修改过的版本。
 
@@ -328,7 +329,7 @@ cowmix
 
 第二个例子作用在数组中的一堆字符串身上并且我们使用 `do` 关键字来执行常规的 `for` 循环(那种情况下，它把循环变量别名给 `$_` 了)并把结果赋值给 `@new` 数组。再次，输出显示原来的数组并没有发生改变。
 
-=== 带副词的 S
+==== 带副词的 S
 
 `S///` 操作符 -- 就像 `s///` 操作符和某些方法一样 -- 允许你使用正则表达式副词：
 
@@ -356,7 +357,9 @@ given 'Lörem Ipsum Dolor Sit Amet' {
 - :x(n) —至多替换 n 次（助记符: 'x' 作为及时）  
 - :ss —(长形式：samespace)保留空白类型：空白字符的类型被保留，而不管替换字符串中使用的是什么空白字符。在上面的例子中，我们使用换行作为替换，但是原来的空白被保留了。  
 
-=== split 字符串分割
+=== 字符串操作
+
+==== split
 
 [source,perl6]
 .script
@@ -364,7 +367,7 @@ given 'Lörem Ipsum Dolor Sit Amet' {
 'fun,handy,scalable'.split(',')
 ----
 
-=== join 字符串连接
+==== join
 
 [source,perl6]
 .script
@@ -379,7 +382,7 @@ given 'Lörem Ipsum Dolor Sit Amet' {
 fun,handy,scalable
 ----
 
-=== trans 字符串翻译
+==== trans
 
 [source,perl6]
 .script
@@ -387,7 +390,7 @@ fun,handy,scalable
 'learnable'.trans: 'ae' => 'AE' # lEArnAblE
 ----
 
-=== flip 字符串翻转
+==== flip
 
 [source,perl6]
 .script
@@ -395,7 +398,7 @@ fun,handy,scalable
 'learnable'.flip # elbanrael
 ----
 
-=== trim-leading trim-trailing trim chomp chop
+==== trim chomp
 
 [source,perl6]
 .script
@@ -407,8 +410,9 @@ fun,handy,scalable
 "learnable".chop.perl            # "learnabl"
 ----
 
-字符串位置：
-=== indices
+=== 字符串位置
+
+==== indices
 
 [source,perl6]
 .script
@@ -416,7 +420,7 @@ fun,handy,scalable
 'learnable'.indices('l') # (0 7)
 ----
 
-=== index 
+==== index 
 
 [source,perl6]
 .script
@@ -424,7 +428,7 @@ fun,handy,scalable
 'learnable'.index('l') # 0
 ----
 
-=== rindex 
+==== rindex 
 
 [source,perl6]
 .script
@@ -432,7 +436,7 @@ fun,handy,scalable
 'learnable'.rindex('l') # 7
 ----
 
-=== starts-with 
+==== starts-with 
 
 [source,perl6]
 .script
@@ -440,7 +444,7 @@ fun,handy,scalable
 'learnable'.starts-with('learn') # True
 ----
 
-=== ends-with 
+==== ends-with 
 
 [source,perl6]
 .script
@@ -448,7 +452,7 @@ fun,handy,scalable
 'learnable'.ends-with('able') # True
 ----
 
-=== pred succ
+==== pred succ
 
 [source,perl6]
 .script
@@ -456,8 +460,9 @@ fun,handy,scalable
 
 ----
 
-字符串转换
-=== lines
+=== 字符串转换
+
+==== lines
 
 [source,perl6]
 .script
@@ -472,7 +477,7 @@ fun,handy,scalable
 ("fun", "handy", "scalable", "learnable").Seq
 ----
 
-=== words
+==== words
 
 [source,perl6]
 .script
@@ -487,7 +492,7 @@ fun,handy,scalable
 ("fun", "handy", "scalable", "learnable").Seq
 ----
 
-=== contains
+==== contains
 
 [source,perl6]
 .script
@@ -495,7 +500,7 @@ fun,handy,scalable
 'learnable'.contains('able') # True
 ----
 
-=== match
+==== match
 
 [source,perl6]
 .script
@@ -504,7 +509,7 @@ fun,handy,scalable
 'learnable'.match(/able/)
 ----
 
-== indent
+==== indent
 
 [source,perl6]
 .script
@@ -519,9 +524,7 @@ fun,handy,scalable
 ( fun  handy  scalable  learnable)
 ----
 
-大小写
-
-=== uc lc tc fc tclc wordcase
+==== uc lc tc fc tclc wordcase
 
 [source,perl6]
 .script
@@ -534,9 +537,9 @@ fun,handy,scalable
 'fun Handy'.wordcase
 ----
 
-== 字符串引用/插值
+=== 字符串引用/插值
 
-=== 多行文本
+==== 多行文本
 
 [source,perl6]
 ----

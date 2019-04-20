@@ -1,11 +1,13 @@
+== Grammar
+
 Grammars 是由一组具名正则组成的。
 
 Grammars 是一个很强大的用于析构文本的工具。
 
 Grammars 允许你把正则组织到一块儿, 就像类组织方法那样。
 
-== 具名正则
-　
+=== 具名正则
+
 grammars 的主要组成部分是 link:http://doc.perl6.org/language/regexes[regexes], 所以在介绍 grammars 之前, 我们先了解什么是具名正则。 具名正则(named regexes) 有它自己的特殊语法, 具名正则跟子例程(subroutine) 的定义很像:
 
 [source,perl6]
@@ -87,7 +89,7 @@ say 'onceuponatime'    ~~ &non-space-y;
 say 'once upon a time' ~~ &space-y;
 ----
 
-== 创建 Grammar
+=== 创建 Grammar
 
 具名正则是构建 Grammars 的基础, 所以我们了解完具名正则的声明以及如何引用具名正则之后, 再来看 Grammars 会有一脉相承的感觉。
 　
@@ -170,9 +172,9 @@ say BetterCalculator.parse('2 * 3', actions => BetterCalculations).made;
 
 所有我们需要添加的就是为 `calc-op` 组添加额外的 rule 和 action, 感谢原型正则(proto regexes), 所有的东西都能正常工作。
 
-== 特殊的 Tokens
+=== 特殊的 Tokens
 
-=== TOP
+==== TOP
 
 [source,perl6]
 ----
@@ -181,16 +183,13 @@ grammar Foo {
 }
 ----
 
-
-The TOP token is the default first token attempted to match when parsing with a grammar—the root of the tree. Note that if you're parsing with .parse method, token TOP is automatically anchored to the start and end of the string (see also: .subparse).
-
 `TOP` token 是默认的第一个尝试去匹配的 token , 当解析一个 grammar 的时候 - 那颗树的根。注意如果你正使用 `.parse` 方法进行解析, 那么 token TOP 被自动地锚定到字符串的开头和结尾(再看看 `.subparse`)。
 
 使用 `rule TOP` 或 `regex TOP` 也是可以接受的。
 
 在 `.parse`、`.subparse` 或 `.parsefile` Grammar 方法中使用 `:rule` 具名参数可以选择一个不同的 token 来进行起始匹配。
 
-=== ws
+==== ws
 
 当使用 `rule` 而非 `token` 时, 原子(atom)后面的任何空白(whitespace)被转换为一个对 `ws` 的非捕获调用。即:
 
@@ -224,11 +223,11 @@ grammar Bar {
 
 上面的例子中, 在 Bar Gramamr 中重写了自己的 `ws`, 只匹配水平空白符, 所以 `\n\n` 匹配失败。
 
-=== 总是成功断言
+==== 总是成功断言
 
-`<?>` is the always succeed assertion(总是匹配成功). 当它用作 grammar 中的 token 时, 它可以被用于触发一个 Action 类方法。在下面的 grammar 中, 我们查找阿拉伯数字并且使用 `always succeed assertion` 定义一个 succ token。
+`<?>` 总是匹配成功。 当它用作 grammar 中的 token 时, 它可以被用于触发一个 Action 类方法。在下面的 grammar 中, 我们查找阿拉伯数字并且使用 `always succeed assertion` 定义一个 succ token。
 
-在 action 类中, 我们使用对 succ 方法的调用来设置(在这个例子中, 我们在 @!numbers 中准备了一个新元素)。在 `digit` 方法中, 我们把阿拉伯数字转换为梵文数字并且把它添加到 @!numbers 数组的最后一个元素中。多亏了 `succ`, 最后一个元素总是当前正被解析的 `digit` 数字的数。
+在 action 类中, 我们使用对 succ 方法的调用来设置(在这个例子中, 我们在 `@!numbers` 中准备了一个新元素)。在 `digit` 方法中, 我们把阿拉伯数字转换为梵文数字并且把它添加到 @!numbers 数组的最后一个元素中。多亏了 `succ`, 最后一个元素总是当前正被解析的 `digit` 数字的数。
 
 [source,perl6]
 ----
@@ -252,9 +251,9 @@ say Digifier.parse('255 435 777', actions => Devanagari.new).made;
 # (२५५ ४३५ ७७७)
 ----
 
-== Grammar 中的方法
+=== Grammar 中的方法
 
-在 grammar 中使用 `method` 代替 `rule` 或 `token` 也是可以的, 只要它们返回一个 [Cursor](https://docs.perl6.org/type/Cursor) 类型:
+在 grammar 中使用 `method` 代替 `rule` 或 `token` 也是可以的, 只要它们返回一个 link:https://docs.perl6.org/type/Cursor[Cursor] 类型:
 
 [source,perl6]
 ----
@@ -280,11 +279,11 @@ say +DigitMatcher.subparse: '12७१७९०९', args => \(:!full-unicode);
 # 12
 ----
 
-== Action Object
+=== Action Object
 　
 一个成功的 grammar 匹配会给你一棵匹配对象(Match objects)的解析树, 匹配树(match tree)到达的越深, 则 grammar 中的分支越多, 那么在匹配树中航行以获取你真正感兴趣的东西就变的越来越困难。
 
-为了避免你在匹配树(match tree)中迷失, 你可以提供一个 action object。grammar 中每次解析成功一个具名规则(named rule)之后, 它就会尝试调用一个和该 grammar rule 同名的方法, 并传递给这个方法一个`Match` 对象作为位置参数。如果不存在这样的同名方法, 就跳过。
+为了避免你在匹配树(match tree)中迷失, 你可以提供一个 action object。grammar 中每次解析成功一个具名规则(named rule)之后, 它就会尝试调用一个和该 grammar rule 同名的方法, 并传递给这个方法一个 `Match` 对象作为位置参数。如果不存在这样的同名方法, 就跳过。
 
 这儿有一个例子来说明 grammar 和 action：
 
@@ -307,7 +306,7 @@ say $match.made;  # 42
 
 `TestActions` 的一个实例变量作为具名参数 `actions` 被传递给 `parse` 调用, 然后当 token `TOP` 匹配成功之后, 就会自动调用方法 `TOP`, 并传递匹配对象(match object) 作为方法的参数。
 
-为了让参数是匹配对象更清楚, 上面的例子使用 `$/` 作为 action 方法的参数名, 尽管那仅仅是一个方便的约定, 跟内在无关。 `$match` 也可以。(尽管使用 `$/` 可以提供把 `$` 作为`$/` 的缩写的优势。)
+为了让参数是匹配对象更清楚, 上面的例子使用 `$/` 作为 action 方法的参数名, 尽管那仅仅是一个方便的约定, 跟内在无关。 `$match` 也可以。(尽管使用 `$/` 可以提供把 `$` 作为 `$/` 的缩写的优势。)
 
 下面是一个更有说服力的例子:
 
@@ -375,7 +374,7 @@ Key: perl       Value: 6
 所以 `<.ws>` 内置的定义是：如果空白在两个 `\w` 单词字符之间, 则意思为 `\s+`, 否则为 `\s*`。 我们可以重写 `ws` 关于空白的定义, 重新定义我们需要的空白。比如把 `ws` 定义为 `{ \h* }` 就是所有水平空白符, 甚至可以将`ws` 定义为非空白字符。例如: `token ws { 'x' }`
 
 
-== Grammar with Action
+=== Grammar with Action
 
 [source,perl6]
 ----
@@ -431,7 +430,7 @@ Obs:
 EOCSV
 ----
 
-== 解析售票数据
+=== 解析售票数据
 
 [source,perl6]
 ----

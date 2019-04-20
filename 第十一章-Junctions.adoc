@@ -1,5 +1,6 @@
+== Junction
 
-== all
+=== all
 
 查找当前目录下的所有以 `.md` 为后缀的文件:
 
@@ -8,7 +9,7 @@
 dir(test => all(/\.md$/))
 ----
 
-== any
+=== any
 
 [source,perl6]
 ----
@@ -36,11 +37,11 @@ if lc($file_ext) eq any(@bad_ext) {
 (1|2) + (3&4); # all(any(4, 5), any(5, 6))
 ----
 
-== none
+=== none
 
 
 
-== one
+=== one
 
 
 link:https://en.wikipedia.org/wiki/Erwin_Schr%C3%B6dinger[薛定谔欧文]应该是喜欢 Perl 6 的, 因为他的著名的link:https://en.wikipedia.org/wiki/Schr%C3%B6dinger%27s_cat[薛定谔的猫]可以用 Perl 6 的 link:https://docs.perl6.org/type/Junction[Junction] 表达:
@@ -56,7 +57,7 @@ say "cat is both dead and alive" if $cat eq 'dead' and $cat eq 'alive';
 
 这里面发生了什么事情? 我会告诉你全部的!
 
-== Anyone 游戏?
+=== any
 
 拿最简单的来说, Junctions 允许你把一堆值当作单个值。例如, 你可以使用 `any` Junction 来测试一个变量是否等于所给定值中的任意一个:
 
@@ -99,7 +100,7 @@ there's overlap!
 运算符会返回 True 如果 `@one` 中的任意一个值(`any`) 在数值上等于 `@two` 中的任意一个值(`any`)的话。这个语法糖很甜, 但是我们还可以做的更多。
 
 
-== All for One and Any for None
+=== All for One and Any for None
 
 `any` Junction 唯一一个你能获得的 Junction。你还可以选择 `all`、`any`、`one` 和 `none`。当在布尔上下文中时, 它们的意思就像下面这样; 构建 Junction 的函数/方法名和 Junction 自身的名字一样并且下面还列出了构建 Junction 的中缀操作符:
 
@@ -127,7 +128,7 @@ my @moar-values;
 say 'also all primes' if @moar-values and @moar-values.all ~~ *.is-prime; 
 ----
 
-== Call Me, Baby
+=== Call Me, Baby
 
  你可以把 Junctions 用作并不期望 Junction 的子例程的参数。那么会发生什么呢? 对于每一个 Junctioned 的值, 那个子例程都会被调用一次, 并且返回值会是一个 Junction：
  
@@ -175,7 +176,7 @@ say 'yeah, it got it, bruh' if 'meow' eq lookup @ids.any;
 ----
 
 
-== 我们一直在期盼你, 请坐。
+=== 我们一直在期盼你, 请坐。
 
 那个游戏变化了当你的子例程正好期望一个 Junction 作为参数的时候。
 
@@ -222,7 +223,7 @@ do-stuff 42;
 # one(42) is even
 ----
 
-== 结论
+=== 结论
 
 Perl 6 的 Junctions 是值的叠加态, 它允许你测试多个值就像它们是一个值一样。除了提供非常短并且易读的语法, Junctions 还允许你使用子例程变换叠加值或者使用副作用。
 
@@ -233,9 +234,8 @@ Perl 6 的 Junctions 是值的叠加态, 它允许你测试多个值就像它们
 
 Junctions 很精彩, 使用它们, 玩的开心!
 
-- 生成含有26个英文字母和下划线的 junction
-
 [source,perl6]
+.生成含有26个英文字母和下划线的 junction
 ----
 any('A'..'Z','a'..'z','_');
 ----
@@ -248,11 +248,11 @@ any('A'..'Z','a'..'z','_');
 any(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, _)
 ----
 
-- 判断一个字符是否在某个集合中
-
 [source,perl6]
+.判断一个字符是否在某个集合中
 ----
 say so any('A'..'Z','a'..'z') ∈ set("12a34".comb); # True
 ----
 
-"12a34".comb 会把字符串分割为单个字符，返回一个字符数组。
+"12a34".comb 会把字符串分割为单个字符，返回一个字符数组。  
+

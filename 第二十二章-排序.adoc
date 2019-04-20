@@ -1,8 +1,10 @@
-== 数组排序
+== 排序
 
-== 散列排序
+=== 数组排序
 
-使用 sort(-*.value) 根据散列值进行降序排列。
+=== 散列排序
+
+使用 `sort(-*.value)` 根据散列值进行降序排列。
 
 [source,perl6]
 .descending sort based on the value of hash
@@ -39,7 +41,7 @@ for %hash.sort(-*.value).kv -> $key, $value {
 ----
 
 
-== 对象排序
+=== 对象排序
 
 [source,perl6]
 ----
@@ -150,7 +152,7 @@ $a leg $b;
 @deck.pick(*);
 ----
 
-== sort a list
+=== 列表排序
 
 给定一个列表:
 
@@ -274,7 +276,7 @@ num univ    dis paper   cited   year
 1 Beijing Physics 193 4555 2005
 ----
 
-== sort array of array
+=== 排序列表的列表
 
 我需要对数组的数组进行排序， `.sort` 方法能不能按照内层数组的不同索引来排序呢？
 
@@ -301,7 +303,7 @@ my @allRecords = [ [birthday1 firstName1 lastName1 [data1]
 @allRecords.sort(*.[1])
 ----
 
-`*.[1]` 和 `*[1]` 没有任何区别, 只是前者更易读。
+`\*.[1]` 和 `*[1]` 没有任何区别, 只是前者更易读。
 
 我们可以先按照 last name 再按照 first name 进行排序，然后按照 birthday 来做单独的比较，就像这样：
 
@@ -325,3 +327,4 @@ my @allRecords = [ [birthday1 firstName1 lastName1 [data1]
 ----
 @a.sort: *[2...0]
 ----
+

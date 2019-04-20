@@ -102,3 +102,5 @@ subset Child  of Person where *.age < 18;
 subset Adult  of Person where -> $person { 18 <= $person.age < 60 };
 subset Senior of Person where *.age >= 60;
 ----
+
+

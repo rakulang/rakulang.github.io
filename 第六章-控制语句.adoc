@@ -1,14 +1,15 @@
+== 控制语句
 
-== for
+=== for
 
 [source,perl6]
 ----
 .say for @list
 ----
 
-== when
+=== when
 
-== gather/take
+=== gather/take
 
 `gather` 是一个语句或者能返回一序列值的 block 前缀。该值来自于 gather 块中的动态作用域的 take 调用。
 
@@ -69,7 +70,7 @@ for f(@a) { $_++ };
 say @a; # OUTPUT«[2 3 4]»
 ----
 
-gather .. for
+=== gather/for
 
 [source,perl6]
 .gather for
@@ -83,13 +84,13 @@ my @r = gather for @all -> $a {
 say @r;
 ----
 
-== until
+=== until
 
-== repeat
+=== repeat
 
-== do
+=== do
 
-== if
+=== if
 
-== unless
+=== unless
 

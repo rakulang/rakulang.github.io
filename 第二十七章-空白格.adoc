@@ -1,8 +1,11 @@
+== 空白格
 
 空白要么是一个字符, 要么是一组空白字符，用于分隔单词。一个例子是空格字符 `« »`。
 
 
-== 关键字后面必须有空白
+=== 关键字
+
+关键字后面必须有空白。
 
 在 Perl 6 中, 关键字后面必须要有空白, 否则会被当成是方法调用。
 
@@ -21,7 +24,9 @@ while $x < 5 { ... }
 if $x < 5 { ... }
 ----
 
-== 中缀运算符前面必须有空白
+=== 中缀运算符
+
+中缀运算符前面必须有空白。
 
 中缀运算符, 例如 `<`, 如果你想使用该运算符比较数值大小, 但是忘了在该中缀运算符前面加上空白, 那么编译器就会告诉你, *Whitespace required before < operator*:
 
@@ -40,7 +45,9 @@ at line 2
         postfix
 ----
 
-== 链式调用允许有空白
+=== 链式调用
+
+链式调用允许有空白。
 
 [source,perl6]
 ----
@@ -49,7 +56,9 @@ my @books = $xml
   .findnodes("/library/book");
 ----
 
-== 名词和后缀运算符之间不能有空白
+=== 名词和后缀运算符
+
+名词和后缀运算符之间不能有空白。
 
 [source,perl6]
 ----
@@ -58,7 +67,9 @@ my @books = $xml
 $subref ($arg) # WRONG
 ----
 
-== [+] 里面的中缀运算符前后都不允许有空白
+=== [+]
+
+[+] 里面的中缀运算符前后都不允许有空白。
 
 [source,perl6]
 ----
@@ -73,7 +84,7 @@ $subref ($arg) # WRONG
 Prefix +  requires an argument, but no valid term found
 ----
 
-== unspace
+=== unspace
 
 通过在空白处放置一个 `/`, 任何连续的空白(包括注释)都会在解释器面前隐身, 这就是所谓的空白隐身(unspace)。
 
@@ -106,7 +117,7 @@ $object\#`{ your ad here }.say
 
 `unspace` 只是让空白在解释器面前隐身了, 但是它并不能使空白在词法分析程序面前隐身, 因为 `token` 中禁用了 `unspace`。
 
-== 正则中的空白
+=== 正则中的空白
 
 我们知道, 在 Perl 6 里面, 正则表达式有 **regex**, **token** 和 **rule** 三种声明方式:
 
@@ -186,9 +197,9 @@ $ingredients ~~ m/:s eggs milk sugar /;
 / <- [a..z_]> <- alpha> / 
 ----
 
-== grammar 中的空白
+=== grammar 中的空白
 
-=== `|` 忽略其左右两侧的空白
+==== `|` 忽略其左右两侧的空白
 
 [source,perl6]
 ----
@@ -225,3 +236,5 @@ rule is a token without sigspace｢rule is a token without sigspace｣
 ----
 
 说明在 rule 中, `|` 左右两边的空格会被忽略, 这通常是为了使格式对齐, 看起来不乱。另外在 rule 中, 开头和末尾的空白也会被忽略。
+
+

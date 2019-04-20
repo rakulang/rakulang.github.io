@@ -1,11 +1,13 @@
-== 有理数
+== 数字
 
-== Int
+=== 有理数
 
-== Num
+=== Int
 
-== BigInt
+=== Num
 
-== Fat
+=== BigInt
 
-== FatRat
+=== Fat
+
+=== FatRat

@@ -1,4 +1,4 @@
-== 数组操作
+== 数组
 
 === 数组字面量
 
@@ -157,7 +157,7 @@ my @list   = flat @data;                 # returns 1..15
 say @list;                               # 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
 ----
 
-== 找出列表中最大值的索引
+=== 找出列表中最大值的索引
 
 [source,perl6]
 ----
@@ -173,7 +173,7 @@ my @list = 1,2,9,6,9,5;
 @list.pairs.max(*.value).key; # 2
 ----
 
-== 比较字符串长度
+=== 比较字符串长度
 
 [source,perl6]
 ----
@@ -196,11 +196,11 @@ my $longest = @strings.max: *.chars ;
 say $longest;
 ----
 
-== 副词
+=== 副词
 
-== `.rotor` - 强大的列表操作工具。
+=== `.rotor` - 强大的列表操作工具
 
-=== 分段
+==== 分段
 
 最简单的, `.rotor` 接收一个整数**$number**并把列表分成多个子列表, 每个子列表含有 **$number** 个元素:
 
@@ -250,7 +250,7 @@ zmeow
 
 [source,perl6]
 ----
-"foobarberboorboozebazmeow".comb.rotor(10, :partial)>>.join>>.indent(4)>>.say
+"foobarberboorboozebazmeow".comb.rotor(10, :partial)».join».indent(4)».say
 ----
 
 输出:
@@ -270,7 +270,7 @@ zmeow
 "foobarberboorboozebazmeow".comb(10)».say
 ----
 
-=== 缝隙
+==== 缝隙
 
 假设你正在接受输入: 你得到一个单词, 它的法语翻译和它的西班牙语翻译, 等一堆单词。你只想输出特定语言, 所以我们需要在我们的列表中跳过某些项。 `.rotor` 来拯救来了!
 
@@ -310,7 +310,7 @@ Bon matin
 
 其中 `[French..*]` 意思为 `[1..*]`, 例子中 French 被枚举化为整数 1。
 
-=== 重叠
+==== 重叠
 
 当我们让缝隙变为负数的时候, 分段的列表中就会有元素重叠:
 
@@ -330,7 +330,7 @@ say <a a b c c c d>.rotor(2 => -1).map: {$_[0] eq $_[1] ?? "same" !! "different"
 ----
 
 
-=== 全力以赴
+==== 全力以赴
 
 `.rotor` 不单单只能接受单个 **Int** 值或 **Pair**, 你可以指定额外的 **Int** 或 **Pairs** 位置参数来把列表分成不同尺寸大小的子列表, 列表之间的缝隙也不同。下面以一个日志文件为例:
 

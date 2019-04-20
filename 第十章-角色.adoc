@@ -1,6 +1,8 @@
+== 角色  
+
 角色是属性和方法的集合; 但是，与类不同，角色仅用于描述对象行为的一部分; 这就是为什么一般来说，角色应该在类和对象中混合使用。通常，类用于管理对象，而角色用于管理对象内的行为和代码重用。
 
-== 角色声明
+=== 角色声明
 
 声明 Roles 就像声明 Class 一样,  在 role 中声明属性和方法就像在 Perl 6 的类中声明属性和方法那样。
 角色使用关键字  `role` 放在所声明的角色名称前面。角色使用 `does` 关键字 mixed in,  `does` 关键字放在角色名之前。
@@ -18,7 +20,7 @@ role CheckingIn {
 }
 ----
 
-## 角色组合
+=== 角色组合
 
 角色 `CheckingIn` 声明了三个属性: `s.start`、`$.end`、`$.saturday` 和一个方法 `hello`。`does` 会把角色中的属性和方法混到类里面, 就像这些属性和方法一开始就存在于类中一样。
 
@@ -74,7 +76,7 @@ class JJL does CheckingIn {
 Attribute '$!end' already exists in the class 'JJL', but a role also wishes to compose it at t.p6:11
 ----
 
-== 角色冲突
+=== 角色冲突
 
 类可以继承多个角色, 如果所继承的角色中有同名的属性/方法, 那么继承后就会发生冲突:
 
@@ -116,14 +118,14 @@ Method 'hello' must be resolved by class Employee because it exists in multiple 
 
 我们再去掉 Salary 中的 `hello()` 方法, 冲突就消失了。所以避免冲突的方法是, 混合角色的时候注意同名属性和方法, 但这通常无法避免。
 
-== 匿名角色
+=== 匿名角色
 
 
 
 
 
 
-== 实例化角色
+=== 实例化角色
 
 如果你实例化角色, 那么角色会变成类:
 
@@ -142,10 +144,11 @@ say $p.abs;
 
 输出:
 
-[source,perl6]
+[source,txt]
 ----
 True
 10
 ----
 
-实例化角色 `Point` 之后, `$p` 变成了 `Point` 类了。
+实例化角色 `Point` 之后, `$p` 变成了 `Point` 类了。    
+

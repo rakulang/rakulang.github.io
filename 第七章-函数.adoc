@@ -1,15 +1,13 @@
-==  link:https://docs.perl6.org/language/functions[Perl 6 中的函数]
+==  Perl 6 中的函数
 
-例程（Routines）是 Perl 6 中代码重用的最小手段。它们有几种形式，最明显的是属于类和角色并与对象相关联的方法，还有函数, 也叫做子例程或短子程序，它们独立于对象而存在。
+例程（Routines）是 Perl 6 中代码重用的最小手段。它们有几种形式，最明显的是属于类和角色并与对象相关联的方法，还有link:https://docs.perl6.org/language/functions[函数], 也叫做子例程或短子程序，它们独立于对象而存在。
 
 子例程默认是词法（`my`）作用域的，对它们的调用通常在编译时解析。
 
-子例程可以具有link:https://docs.perl6.org/type/Signature[签名]，也称为*参数列表*，其指定签名期望的参数（如果有的话）。 它可以指定（或保持打开）参数的数量和类型，以及返回值。
+子例程可以具有link:https://docs.perl6.org/type/Signature[签名]，也称为**参数列表**，其指定签名期望的参数（如果有的话）。 它可以指定（或保持打开）参数的数量和类型，以及返回值。
 
 
 子例程的内省通过link:https://docs.perl6.org/type/Routine[例程]提供。
-
-== 定义/创建/使用 函数
 
 === 子例程
 
@@ -136,9 +134,9 @@ sub format(Str $s) { ... }
 
 有关签名的语法和使用的详细信息，请参阅  link:https://docs.perl6.org/type/Signature[Signature] 类的文档。
 
-=== 自动签名
+==== 自动签名
 
-如果没有提供签名，但在函数体中使用了两个自动变量 `@_` 或 `%_` 中的任何一个，则将生成带有 `*@_` 或 `*%_` 的签名。 两个自动变量可以同时使用。
+如果没有提供签名，但在函数体中使用了两个自动变量 `@\_` 或 `%_` 中的任何一个，则将生成带有 `*@\_` 或 `%_` 的签名。 两个自动变量可以同时使用。
 
 [source,perl6]
 ----
@@ -146,7 +144,7 @@ sub s { say @_, %_ };
 dd &s.signature # OUTPUT«:(*@_, *%_)␤»
 ----
 
-=== 参数
+==== 参数
 
 参数以逗号分隔列表的形式提供。 要消除嵌套调用的歧义, 可以使用圆括号或副词形式。
 
@@ -296,7 +294,7 @@ $congrats.congratulate('birthday', 'Bob'); #-> Happy birthday, Bob
 === proto
 
 
-link:https://docs.perl6.org/syntax/proto[proto] 从形式上声明了 `multi` 候选者之间的`共性`。 proto 充当作能检查但不会修改参数的包装器。看看这个基本的例子:
+link:https://docs.perl6.org/syntax/proto[proto] 从形式上声明了 `multi` 候选者之间的 `共性`。 proto 充当作能检查但不会修改参数的包装器。看看这个基本的例子:
 
 
 [source,perl6]
@@ -347,11 +345,11 @@ mistake-proto(7,42);   #-> (Int) -- coercions not passed on
 mistake-proto('test'); #!> fails -- defaults not passed on
 ----
 
-== 约定和惯用法
+=== 约定和惯用法
 
 虽然上面描述的调度系统提供了很多灵活性，但是存在一些大多数内部函数以及许多模块中的函数将遵循的约定。 这些将产生一致的外观和感觉。
 
-=== 吞噬约定
+==== 吞噬约定
 
 也许最重要的是处理 slurpy 列表参数的方式。 大多数时候，函数不会自动展平吞噬(slurpy)列表。 罕见的例外是在列表的列表上没有合理行为的那些函数（例如chrs），或者与已建立的习语有冲突的函数，例如  link:https://docs.perl6.org/routine/pop[pop] 是 link:https://docs.perl6.org/routine/push[push] 的逆操作。
 
@@ -360,7 +358,7 @@ mistake-proto('test'); #!> fails -- defaults not passed on
 -  link:https://docs.perl6.org/language/containers#Scalar_containers[Scalar 容器]内的 Iterable 不计数。
 - 在顶层使用 `,` 创建的列表只能计数为一个 Iterable。
 
-这可以通过使用带有 `+` 或 `+@` 而不是 `**`的 slurpy 来实现：
+这可以通过使用带有 `+` 或 `+@` 而不是 `**` 的 slurpy 来实现：
 
 [source,perl6]
 ----
@@ -409,7 +407,7 @@ my \c = (1, 2);  # Sigilless variables always bind, even with '='
 grab(c);        # grab 1 grab 2
 ----
 
-== 函数是一等对象
+==== 函数是一等对象
 
 函数和其他代码对象可以作为值传递，就像任何其他对象一样。
 
@@ -441,7 +439,7 @@ my @squared = map &square,  1..5;
 say join ', ', @squared;        # 1, 4, 9, 16, 25
 ----
 
-=== 中缀形式
+==== 中缀形式
 
 要像中缀运算符那样调用具有2个参数的子例程，请使用由 `[` 和 `]` 包围的子例程引用。
 
@@ -452,7 +450,7 @@ say 21 [&plus] 21;
 # OUTPUT«42␤»
 ----
 
-=== 闭包
+==== 闭包
 
 Perl 6 中的所有代码对象都是闭包，这意味着它们可以从外部作用域引用词法变量。
 
@@ -481,7 +479,7 @@ say join ', ', map { $_ * $multiply-by }, 1..5;     # 5, 10, 15, 20, 25
 
 没有闭包的语言不能轻易地提供高阶函数，它们像 map 一样易于使用和强大。
 
-=== Routines
+==== Routines
 
 例程是遵守  link:https://docs.perl6.org/type/Routine[Routine] 类型的代码对象，最明显的是  https://docs.perl6.org/type/Sub[Sub]，link:https://docs.perl6.org/type/Method[方法]，link:https://docs.perl6.org/type/Regex[正则表达式]和 https://docs.perl6.org/type/Submethod[Submethod]。
 
@@ -532,7 +530,7 @@ say testee(10, "ten");
 # OUTPUT«6.151190ten␤»
 ----
 
-=== 定义操作符
+==== 定义操作符
 
 操作符只是有趣名字的子例程。 有趣的名称由类别名称（中缀，前缀，后缀，环缀，后环缀）组成，后面跟着冒号，以及一个或多个操作符名称的列表（在环缀和后环缀的情况下为两个组件）。
 
@@ -589,7 +587,7 @@ say "abc" ieq "Abc";
 # OUTPUT«True␤»
 ----
 
-=== 优先级
+==== 优先级
 
 Perl 6 中的运算符优先级相对于现有运算符指定。 `is tighter`、`is equiv` 和 `is looser` 特性能使用一个运算符提供，新的运算符优先级与之相关。 可以应用更多的特征。
 
@@ -615,7 +613,7 @@ sub infix:<!!>($a,$b) is looser(&infix:<x>) { ... }
 
 要将新运算符置于与现有运算符相同的优先级别上，请使用 `is equiv(&other-operator)`。
 
-=== 结合性
+==== 结合性
 
 当同一个操作符在一行中连续出现多次时，有多种可能的解释。 例如
 
@@ -686,7 +684,7 @@ sub infix:<§>(*@a) is assoc<list> {
 say 1 § 2 § 3;      # (1|2|3)
 ----
 
-=== Traits
+==== Traits
 
 特性（*traits*）是在编译时运行以修改类型，变量，例程，属性或其他语言对象的行为的子例程。
 
@@ -725,9 +723,9 @@ say square 3;       # 18
 
 请参阅内置常规性状文档的 link:https://docs.perl6.org/type/Routine[类型例程]。
 
-=== 重新分派
+==== 重新分派
 
-在某些情况下，例程可能想从链中调用下一个方法。 这个链可以是类层次结构中的父类的列表，或者它可以是来自多分派的较不具体的 multi 候选者，或者它可以是来自`wrap`的内部例程。
+在某些情况下，例程可能想从链中调用下一个方法。 这个链可以是类层次结构中的父类的列表，或者它可以是来自多分派的较不具体的 multi 候选者，或者它可以是来自 `wrap` 的内部例程。
 
 在所有这些情况下，您可以使用 `callwith` 通过您自己选择的参数调用链中的下一个例程。
 
@@ -879,7 +877,7 @@ print-bar Foo.new;
 
 强制类型应该在类型工作的任何地方工作，但 Rakudo 当前（2015.02）仅针对子例程参数实现了它们。
 
-== sub MAIN
+=== sub MAIN
 
 具有特殊名称 MAIN 的 sub 在所有相关 parsers 之后执行，并且其签名是可以解析命令行参数的装置。 支持 multi 方法，如果未提供命令行参数，则会自动生成并显示使用方法。 所有命令行参数在  link:https://docs.perl6.org/language/variables#Dynamic_variables[@*ARGS] 中也可用，它可以在被 MAIN 处理之前进行变换。
 
@@ -899,7 +897,7 @@ sub MAIN( Int :$length = 24,
 }
 ----
 
-== sub USAGE
+=== sub USAGE
 
 如果对于给定的命令行参数没有找到 `MAIN` 的多个候选者，则调用 sub `USAGE`。 如果没有找到此类方法，则输出生成的使用消息。
 
@@ -915,3 +913,5 @@ Prints the answer or 'dunno'.
 EOH
 }
 ----
+
+

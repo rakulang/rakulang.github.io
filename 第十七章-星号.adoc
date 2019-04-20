@@ -1,4 +1,4 @@
-== *
+== Whatever Star
 
 冒号和星号是 Perl 6 中比较有特色的俩个符号, 上次我们介绍了冒号, 今天我们来看一看星号 `*`:
 
@@ -350,7 +350,7 @@ say $*SPEC.devnull;  #=> /dev/null
 在 Perl 6 中，根据上下文的不同，您可以叫它星星（或者，如果你愿意的话，可以叫它星号）或者 *whatever*。
 
 
-让我们看看 `*` 的不同用法，从最简单的开始，旨在了解最烧脑的例如 `* ** *`。
+让我们看看 `\*` 的不同用法，从最简单的开始，旨在了解最烧脑的例如 `* ** *`。
 
 前两种用法很简单，不需要太多的讨论：
 
@@ -366,7 +366,7 @@ say 20 * 18; # 360
 
 ==== 2. 幂
 
-两个星号 `**` 是幂运算符。再次, 这是一个中缀运算符 `infix:<**>`, 它返回 `Numeric` 结果, 计算两个给定值的幂。
+两个星号 `+++**+++` 是幂运算符。再次, 这是一个中缀运算符 `infix:<**>`, 它返回 `Numeric` 结果, 计算两个给定值的幂。
 
 [source,perl6]
 .power
@@ -376,7 +376,7 @@ say pi ** e; # 22.4591577183611
 
 ==== 3. 零或多次重复
 
-正则表达式中同样也使用了两个标记（`*` 或 `**`），它们表示不同的东西。 Perl 6 的一个特点是它可以很容易地在不同的语言之间切换。 正则表达式和 grammar 都是这样的内部语言的例子，其中同样的符号在 Perl 6 中可能意味着不同的含义。
+正则表达式中同样也使用了两个标记（ `\*` 或 `**`），它们表示不同的东西。 Perl 6 的一个特点是它可以很容易地在不同的语言之间切换。 正则表达式和 grammar 都是这样的内部语言的例子，其中同样的符号在 Perl 6 中可能意味着不同的含义。
 
 `*` 号量词这个语法条目和 Perl 5 中点行为类似: 允许原子的零次或多次重复。
 
@@ -652,7 +652,7 @@ multi method new(\min, Whatever \max, :$excludes-min, :$excludes-max) {
 
 > 作为一个圣诞故事，这里有一个小小的插曲，表明 `*` 不仅仅是一个 `Inf`。 有两个到 link:https://github.com/rakudo/rakudo/blob/master/src/core/Whatever.pm[src/core/Whatever.pm] 的提交：
 
-> 首先，2015年9月16日，link:https://github.com/rakudo/rakudo/commit/425845d723afb60d80dcca55b509ff1c1f9b303c#diff-ac169f9e5137f98d305f3cae4c0c4d07[MakeWhatever.new == Inf True]"
+> 首先，2015年9月16日，link:https://github.com/rakudo/rakudo/commit/425845d723afb60d80dcca55b509ff1c1f9b303c#diff-ac169f9e5137f98d305f3cae4c0c4d07[MakeWhatever.new +++==+++ Inf True]  
 
       my class Whatever {
           multi method ACCEPTS(Whatever:D: $topic) { True }
@@ -1018,7 +1018,7 @@ my @n =
 .say for @n[^5];
 ----
 
-D'哦。 我建议我们从转换代码开始来摆脱所有的星号，并使用不同的语法。
+我建议我们从转换代码开始来摆脱所有的星号，并使用不同的语法。
 
 序列运算符 `...` 之后的 `*` 意味着无限地生成序列，所以用 `Inf` 来代替它:
 
@@ -1064,5 +1064,3 @@ my @n = (0, 1, -> $x, $y {$x + $y} ... Inf).grep({
 
 - 1. Perl 6 中的 `chdir('/')` 和 `＆*chdir('/')` 有什么区别？
 - 2. 解释下面的 Perl 6 代码并修改它以展示其优点：`.say for 1 ... **`。
-
-=== ❄❄❄
