@@ -6,7 +6,7 @@
 
 使用 `sort(-*.value)` 根据散列值进行降序排列。
 
-[source,perl6]
+[source,raku]
 .descending sort based on the value of hash
 ----
 my %hash = 'Perl'=>80,
@@ -23,7 +23,7 @@ for %hash.sort(-*.value) -> (:$key, :$value) {
 
 `-> () { }` 结构用于解构签名, 它实际上等价于：
 
-[source,perl6]
+[source,raku]
 .descending sort based on the value of hash
 ----
 for %hash.sort(-*.value) -> (:key($key), :value($value)) {
@@ -33,7 +33,7 @@ for %hash.sort(-*.value) -> (:key($key), :value($value)) {
 
 还可以这样写：
 
-[source,perl6]
+[source,raku]
 ----
 for %hash.sort(-*.value).kv -> $key, $value {
     say $key, "\t", $value;
@@ -43,7 +43,7 @@ for %hash.sort(-*.value).kv -> $key, $value {
 
 === 对象排序
 
-[source,perl6]
+[source,raku]
 ----
 # Sort an array of composite structures by a key. For example, if you define a composite structure that presents a name-value pair (in pseudocode):
 # Define structure pair such that:
@@ -115,7 +115,7 @@ my @c = @students.sort: -> $a, $b {$a.grade <=> $b.grade};
 say @c.perl;
 ----
 
-[source,perl6]
+[source,raku]
 ----
 # 1 if $a is higher, -1 if $b is higher, 0 if equal
 $a <=> $b;
@@ -164,7 +164,7 @@ list = [ {'date': '2010-04-01','people': 1047, 'hits': 4522},
        ]
 ----
 
-[source,perl6]
+[source,raku]
 ---- 
 # 根据日期进行排序
 
@@ -184,7 +184,7 @@ say .key, " ", ~.values for @sorted_des.classy(*.substr(7,7)).map( {   .key => .
 # @list.sort: { $^a.split('/')[2] leg $^b.split('/')[2] }
 ----
 
-[source,perl6]
+[source,raku]
 ----
 my $a = ('a' .. 'z').roll(10000000);
 say .key, ' => ', .value for $a.cache.classify(*.Str).map({.key => .value.elems}).sort({-.value});
@@ -197,7 +197,7 @@ say now - INIT now;
 
 我定义一个类来进行多列数据的排序, 很方便：
 
-[source,perl6]
+[source,raku]
 ----
 class Course {
   has Int $.numb;
@@ -282,7 +282,7 @@ num univ    dis paper   cited   year
 
 要排序的数组在一个更大的数组的外面：（birthday 是 'mmddyy' 格式的：）
 
-[source,perl6]
+[source,raku]
 ----
 my @allRecords = [ [birthday1 firstName1 lastName1 [data1]
                    [birthday2 firstName2 lastName2 [data2] 
@@ -294,11 +294,11 @@ my @allRecords = [ [birthday1 firstName1 lastName1 [data1]
 
 有什么好方法能按照 firstName 或 lastName 或按照内层数组里面的数据来排序呢？
 
-`sort` 方法接受一个link: https://docs.perl6.org/routine/sort#(List)_routine_sort[可选的 sub 参数]。如果元数是 1， 那么它使用返回值作为比较操作数；如果元数为 2， 那么你可以在两个元素之间手动作比较，两个元素的比较会返回 `Less`, `Same`, `More`。
+`sort` 方法接受一个link: https://docs.raku.org/routine/sort#(List)_routine_sort[可选的 sub 参数]。如果元数是 1， 那么它使用返回值作为比较操作数；如果元数为 2， 那么你可以在两个元素之间手动作比较，两个元素的比较会返回 `Less`, `Same`, `More`。
 
 拿你上面的例子来说，我们可以像这样按照 first name 进行排序：
 
-[source,perl6]
+[source,raku]
 ----
 @allRecords.sort(*.[1])
 ----
@@ -307,7 +307,7 @@ my @allRecords = [ [birthday1 firstName1 lastName1 [data1]
 
 我们可以先按照 last name 再按照 first name 进行排序，然后按照 birthday 来做单独的比较，就像这样：
 
-[source,perl6]
+[source,raku]
 ----
 @allRecords.sort(-> $a,$b {
     $a[2] cmp $b[2] || $a[1] cmp $b[1] || $a[0] cmp $b[0]
@@ -316,14 +316,14 @@ my @allRecords = [ [birthday1 firstName1 lastName1 [data1]
 
 或者再次通过转换操作数：
 
-[source,perl6]
+[source,raku]
 ----
 @allRecords.sort(*.[2...0]);
 ----
 
 你可以按照 lastname，firstname， birthday 这样的顺序排序：
 
-[source,perl6]
+[source,raku]
 ----
 @a.sort: *[2...0]
 ----

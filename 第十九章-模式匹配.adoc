@@ -1,6 +1,6 @@
 == 模式匹配
 
-[source,perl6]
+[source,raku]
 .given/when and scalar
 ----
 my $name = "twostraws";
@@ -15,7 +15,7 @@ given $name {
 
 === 同时检查名字和密码
 
-[source,perl6]
+[source,raku]
 .given/when and tuple
 ----
 my $name     = "twostraws";
@@ -31,7 +31,7 @@ given ($name, $password) {
 
 === 使用单个元组
 
-[source,perl6]
+[source,raku]
 .given/when and tuple
 ----
 my $authentication = ("twostraws", "fr0st1es");
@@ -48,7 +48,7 @@ given $authentication {
 
 你只关心某些感兴趣的值，不关心其它值，使用 `*` 号或 `$` 来代表 "any value is fine"
 
-[source,perl6]
+[source,raku]
 .given/when and */$
 ----
 my $authentication = ("twostraws", "fr0st1es", "127.0.0.1");
@@ -64,7 +64,7 @@ given $authentication {
 
 但仍然想知道其它部分是什么
 
-[source,perl6]
+[source,raku]
 ----
 my $authentication = ("twostraws", "fr0st1es");
 given $authentication {
@@ -77,7 +77,7 @@ given $authentication {
 
 === 匹配计算型元组
 
-[source,perl6]
+[source,raku]
 .given/when and computational tuple
 ----
 sub fizzbuzz(Int $number) returns Str {
@@ -96,7 +96,7 @@ say fizzbuzz(15);
 === 遍历元组
 
 
-[source,perl6]
+[source,raku]
 ----
 my $twostraws = ("twostraws", "fr0st1es");
 my $bilbo = ("bilbo", "bagg1n5");
@@ -111,7 +111,7 @@ for @users -> $user {
 === 使用 when 匹配元组中的指定值
 
 
-[source,perl6]
+[source,raku]
 .when/for
 ----
 my $twostraws = ("twostraws", "fr0st1es");
@@ -129,7 +129,7 @@ say "User $_[0] has password \"fr0st1es\"" when (*, "fr0st1es") for @users;
 === 匹配范围
 
 
-[source,perl6]
+[source,raku]
 .given/when and range
 ----
 my $age = 36;
@@ -145,7 +145,7 @@ given $age {
 === when 可以配合智能匹配操作符 ~~ 单独使用
 
 
-[source,perl6]
+[source,raku]
 .when and smartmatch
 ----
 my $age = 36;
@@ -156,7 +156,7 @@ default                { say "你有时间和金钱，但是没活力"}
 
 === 使用 contains 方法
 
-[source,perl6]
+[source,raku]
 .when/contains
 ----
 my $age = 36;
@@ -168,7 +168,7 @@ default                         { say "你有时间和金钱，但是没活力"}
 === 匹配元组中的范围
 
 
-[source,perl6]
+[source,raku]
 .given/when and range
 ----
 my $user = ("twostraws", "fr0st1es", 36);
@@ -184,7 +184,7 @@ given $user {
 === 枚举
 
 
-[source,perl6]
+[source,raku]
 .given/when and enum
 ----
 enum WeatherType <Cloudy Sunny Windy>;
@@ -199,7 +199,7 @@ given $today {
 
 === 使用 if 语句
 
-[source,perl6]
+[source,raku]
 .if and enum
 ----
 if $today ~~ WeatherType::Cloudy { say "多云" }
@@ -208,7 +208,7 @@ if $today ~~ WeatherType::Cloudy { say "多云" }
 
 === 关联值
 
-[source,perl6]
+[source,raku]
 .given/when and enum with associated value
 ----
 enum WeatherType  (
@@ -228,7 +228,7 @@ given $today {
 
 === when 从句
 
-[source,perl6]
+[source,raku]
 .when/for clause
 ----
 my @numbers = 1..10;

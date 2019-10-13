@@ -2,7 +2,7 @@
 
 === 数组字面量
 
-[source,perl6]
+[source,raku]
 ----
 my @primes = (2,3,5,7,11,13,17,19,23);   # an array gets filled like in Perl 5
 my @primes =  2,3,5,7,11,13,17,19,23 ;   # 同样的事情, 不需要圆括号
@@ -16,7 +16,7 @@ my @primes = <2 3 5 7 11 13 17 19 23>;   # 同样, <> 等价于 qw()
 === 多维数组
 
 === map
-[source,perl6]
+[source,raku]
 .map
 ----
 my @array = 1,3,5,7,9;
@@ -28,7 +28,7 @@ my @arrayplusab = map( *+*+3, @array,11);
 say @arrayplusab;
 ----
 
-[source.perl6]
+[source.raku]
 ----
 my @rray=17,21,34,47,58,69;
 
@@ -71,7 +71,7 @@ say @rray.grep({$_>40});   # high order grep, returns only these elements that p
 # say @rray.zip;            # join arrays by picking first element left successively from here and then there
 ----
 
-[source,perl6]
+[source,raku]
 ----
 my  @primes=<1 3 5 7 9 11 13 15 17>;
 say @primes;                       # all values as list
@@ -100,7 +100,7 @@ my @copy = @data;                      # copy the whole AoA, no more reference p
 say @copy.perl;
 ----
 
-[source,perl6]
+[source,raku]
 ----
 my @original = [1,2],[3,4];
 say @original.perl;
@@ -113,7 +113,7 @@ say $copy;
 
 === classify
 
-[source,perl6]
+[source,raku]
 ----
 my @names = <Patrick Jonathan Larry Moritz Audrey>;
 say .key, "\t", ~.values
@@ -131,7 +131,7 @@ say .key, "\t", ~.values
 6	Moritz Audrey
 ----
 
-[source,perl6]
+[source,raku]
 ----
 say @primes[];                           # 2 3 5 7 11 13 17 19 23
 my $arrayref = [2,3,5,7,11,13,17,19,23]; # in scalar context you get automatically a reference
@@ -162,7 +162,7 @@ say @list;                               # 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
 
 === 找出列表中最大值的索引
 
-[source,perl6]
+[source,raku]
 ----
 my @list = 1,2,9,6,9,5;
 @list.maxpairs; # [2 => 9 4 => 9]
@@ -171,14 +171,14 @@ my @list = 1,2,9,6,9,5;
 `@list.maxpairs` 用于获取索引和对应最大值的所有对儿。
 `@list.pairs.max(*.value).key` 用于仅获取单个索引。
 
-[source,perl6]
+[source,raku]
 ----
 @list.pairs.max(*.value).key; # 2
 ----
 
 === 比较字符串长度
 
-[source,perl6]
+[source,raku]
 ----
 # quote words, but with quote protection!
 my @strings = qww/
@@ -207,7 +207,7 @@ say $longest;
 
 最简单的, `.rotor` 接收一个整数**$number**并把列表分成多个子列表, 每个子列表含有 **$number** 个元素:
 
-[source,perl6]
+[source,raku]
 ----
 say <a b c d e f  g h>.rotor: 3
 # ((a b c) (d e f))
@@ -215,7 +215,7 @@ say <a b c d e f  g h>.rotor: 3
 
 我们有一个含有 8 个元素的列表, 我们在该列表上调用接收参数 3 的 `.rotor` 方法, 它返回 2 个列表, 每个列表中含有 3 个元素。不包括原列表中的最后 2 个元素, 因为它们没有组成一个完整的3个元素的列表。然而它们可以被包含进来, 使用 `:partial` 具名参数设置为 **True**:
 
-[source,perl6]
+[source,raku]
 ----
 say <a b c  d e f  g h>.rotor: 3, :partial
 say <a b c  d e f  g h>.rotor: 3, :partial(True)
@@ -234,14 +234,14 @@ say <a b c  d e f  g h>.rotor: 3, :partial(False)
 
 下面应用一下我们刚刚学到的。把字符串分成列宽相等的几段:
 
-[source,perl6]
+[source,raku]
 ----
 "foobarberboorboozebazmeow".comb.rotor(10, :partial)».join».say
 ----
 
 输出:
 
-[source,perl6]
+[source,raku]
 .Output
 ----
 foobarberb
@@ -251,7 +251,7 @@ zmeow
 
 分行然后每行前面添加 4 个空格:
 
-[source,perl6]
+[source,raku]
 ----
 "foobarberboorboozebazmeow".comb.rotor(10, :partial)».join».indent(4)».say
 ----
@@ -268,7 +268,7 @@ zmeow
 
 但是这最好被写为:
 
-[source,perl6]
+[source,raku]
 ----
 "foobarberboorboozebazmeow".comb(10)».say
 ----
@@ -279,7 +279,7 @@ zmeow
 
 指定一对儿(Pair)整数作为 rotor 的参数会让每个列表中含有 **$key** 个元素, 每个列表之间有 **$value** 个空隙。看例子更简单一些:
 
-[source,perl6]
+[source,raku]
 .partial
 ----
 say ^10 .rotor: 3 => 1, :partial;
@@ -297,7 +297,7 @@ say ^10 .rotor: 2 => 2, :partial;
 
 第一个例子我们把缝隙设置为 1, 第二个例子我们把缝隙增加为 2。
 
-[source,perl6]
+[source,raku]
 ----
 enum <English French Spanish>;
 say join " ", <Good Bon Buenos morning matin días>[French..*].rotor: 1 => 2;
@@ -317,7 +317,7 @@ Bon matin
 
 当我们让缝隙变为负数的时候, 分段的列表中就会有元素重叠:
 
-[source,perl6]
+[source,raku]
 ----
 say <a a b c c c d>.rotor: 2 => -1;
 say <a a b c c c d>.rotor(2 => -1).map: {$_[0] eq $_[1] ?? "same" !! "different"};
@@ -325,7 +325,7 @@ say <a a b c c c d>.rotor(2 => -1).map: {$_[0] eq $_[1] ?? "same" !! "different"
 
 输出:
 
-[source,perl6]
+[source,raku]
 .Output
 ----
 ((a a) (a b) (b c) (c c) (c c) (c d))
@@ -337,7 +337,7 @@ say <a a b c c c d>.rotor(2 => -1).map: {$_[0] eq $_[1] ?? "same" !! "different"
 
 `.rotor` 不单单只能接受单个 **Int** 值或 **Pair**, 你可以指定额外的 **Int** 或 **Pairs** 位置参数来把列表分成不同尺寸大小的子列表, 列表之间的缝隙也不同。下面以一个日志文件为例:
 
-[source,perl6]
+[source,raku]
 ----
 IP: 198.0.1.22
 Login: suser
@@ -358,7 +358,7 @@ Output: success
 
 我们想这样输出: **Header** 里包含 IP, Login, Time, Resource; **Operation** 里包含 Resource, Input, Output。
 
-[source,perl6]
+[source,raku]
 ----
 for 'report.txt'.IO.lines».indent(4).rotor( 4 => -1, 3 => 1 ) -> $head, $op {
     .say for "Header:",    |$head,
@@ -396,7 +396,7 @@ Operation:
 
 记住, 你提供给 `.rotor` 方法的模式可以动态地生成! 这儿我们使用 sin 函数来生成:
 
-[source,perl6]
+[source,raku]
 ----
 say ^92 .rotor(
     (0.2, 0.4 ... 3).map: (10 * *.sin).Int # pattern we supply to .rotor
@@ -405,7 +405,7 @@ say ^92 .rotor(
 
 输出:
 
-[source,perl6]
+[source,raku]
 .Output
 ----
 0
@@ -457,7 +457,7 @@ TAAAAGGCGTTCATTGGATATTTCACTGGCAGTGCATCC
 
 使用 rotor 来实现:
 
-[source,perl6]
+[source,raku]
 ----
 my %re;
 for 'input.txt'.IO.lines».rotor(2, :partial) -> $header, $data {

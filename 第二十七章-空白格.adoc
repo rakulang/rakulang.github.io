@@ -7,9 +7,9 @@
 
 关键字后面必须有空白。
 
-在 Perl 6 中, 关键字后面必须要有空白, 否则会被当成是方法调用。
+在 Raku 中, 关键字后面必须要有空白, 否则会被当成是方法调用。
 
-[source,perl6]
+[source,raku]
 ----
 while ($x < 5) { ... } 
 if $x < 5 { ... }
@@ -18,7 +18,7 @@ my ($x, $y)
 
 而大部分括号都可以省略
 
-[source,perl6]
+[source,raku]
 ----
 while $x < 5 { ... }
 if $x < 5 { ... }
@@ -49,7 +49,7 @@ at line 2
 
 链式调用允许有空白。
 
-[source,perl6]
+[source,raku]
 ----
 my @books = $xml
   .parse-file($file)           # some comment 
@@ -60,7 +60,7 @@ my @books = $xml
 
 名词和后缀运算符之间不能有空白。
 
-[source,perl6]
+[source,raku]
 ----
 %hash  {$key}  # WRONG
 @array [$ix]   # WRONG
@@ -71,7 +71,7 @@ $subref ($arg) # WRONG
 
 [+] 里面的中缀运算符前后都不允许有空白。
 
-[source,perl6]
+[source,raku]
 ----
 [+] 1,2,3 # 6
 ----
@@ -90,7 +90,7 @@ Prefix +  requires an argument, but no valid term found
 
 使用 `unspace` 可以把后缀运算符贴线对齐:
 
-[source,perl6]
+[source,raku]
 ----
 %hash\  {$key}
 @array\ [$ix]
@@ -99,14 +99,14 @@ $subref\($arg)
 
 上面的最后一种形式是一种退化了的 `unspace`, 即反斜线后面直接跟着后缀。注意, 反斜线前面不允许有空白, 所以:
 
-[source,perl6]
+[source,raku]
 ----
 $subref \($arg)
 ----
 
 是语法错误(two terms in a row)。其它后缀运算符也可以使用 `unspace`:
 
-[source,perl6]
+[source,raku]
 ----
 $number\  ++;
 $number\  --;
@@ -119,9 +119,9 @@ $object\#`{ your ad here }.say
 
 === 正则中的空白
 
-我们知道, 在 Perl 6 里面, 正则表达式有 **regex**, **token** 和 **rule** 三种声明方式:
+我们知道, 在 Raku 里面, 正则表达式有 **regex**, **token** 和 **rule** 三种声明方式:
 
-[source,perl6]
+[source,raku]
 ----
 my regex named-regex { ... }
 my token named-regex { ... }
@@ -156,14 +156,14 @@ my rule  named-regex { ... }
 
 在 `rule` 中, 任何跟在原子(atom)后面的空白都会变成非捕获的 `<ws>` 调用, 即 `<.ws>`。因此, 
 
-[source,perl6]
+[source,raku]
 ----
 rule entry { <key> '=' 'value' }
 ----
 
 等价于:
 
-[source,perl6]
+[source,raku]
 ----
 token entry { <key> <.ws> '=' <.ws> <value> <.ws> } # 点号抑制了捕获
 ----
@@ -172,7 +172,7 @@ token entry { <key> <.ws> '=' <.ws> <value> <.ws> } # 点号抑制了捕获
 
 在正则表达式中, *:s* 是 *:sigspace* 的简写, 该修饰符使普通 regex 中的空白变得有意义:
 
-[source,perl6]
+[source,raku]
 ----
 my $ingredients = 'eggs milk sugar ';
 $ingredients ~~ m/:s eggs milk sugar /;
@@ -182,7 +182,7 @@ $ingredients ~~ m/:s eggs milk sugar /;
 
 在字符类中, 空白字面量会被忽略:
 
-[source,perl6]
+[source,raku]
 ----
 / <[ a .. z _ ]>* /
 / <[ . _ ]>* /
@@ -191,7 +191,7 @@ $ingredients ~~ m/:s eggs milk sugar /;
 
 `-` 后面允许有空白:
 
-[source,perl6]
+[source,raku]
 ----
 / <-[a..z_]> <-alpha> /
 / <- [a..z_]> <- alpha> / 
@@ -201,7 +201,7 @@ $ingredients ~~ m/:s eggs milk sugar /;
 
 ==== `|` 忽略其左右两侧的空白
 
-[source,perl6]
+[source,raku]
 ----
 grammar Token::Rule::Difference {
     # 下面三者等价

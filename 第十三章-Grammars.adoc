@@ -8,9 +8,9 @@ Grammars 允许你把正则组织到一块儿, 就像类组织方法那样。
 
 === 具名正则
 
-grammars 的主要组成部分是 link:http://doc.perl6.org/language/regexes[regexes], 所以在介绍 grammars 之前, 我们先了解什么是具名正则。 具名正则(named regexes) 有它自己的特殊语法, 具名正则跟子例程(subroutine) 的定义很像:
+grammars 的主要组成部分是 link:http://doc.raku.org/language/regexes[regexes], 所以在介绍 grammars 之前, 我们先了解什么是具名正则。 具名正则(named regexes) 有它自己的特殊语法, 具名正则跟子例程(subroutine) 的定义很像:
 
-[source,perl6]
+[source,raku]
 .named regexes called number
 ----
 my regex number { \d+ [ \. \d+ ]?   } 
@@ -21,7 +21,7 @@ my regex number { \d+ [ \. \d+ ]?   }
 
 正则有名字了就方便我们在任何地方引用那个正则了:
 
-[source,perl6]
+[source,raku]
 .reference named regexes
 ----
 say so "32.51" ~~ &number;                         # ① 
@@ -30,7 +30,7 @@ say so "15 + 4.5" ~~ /<number>\s* '+' \s*<number>/ # ②
 
 在 grammars 外面, 为什么用 `&number` 引用具名正则呢? 对比具名子例程你就知道了:
 
-[source,perl6]
+[source,raku]
 .named subroutine
 ----
 sub number { say "i am a subroutine" }  # 具名子例程
@@ -39,7 +39,7 @@ sub number { say "i am a subroutine" }  # 具名子例程
 
 但是有个语法不一致的地方就是, 在 `/ /` 或 grammars 里面, 引用具名正则的语法有点特殊, 就是给正则的名字包裹上 `< >`。这会把该具名正则插入(带入)到整个正则之中, 就像字符串插值那样：
 
-[source,perl6]
+[source,raku]
 ----
 # 声明具名正则
 my regex number { \d+ [ \. \d+]? }  
@@ -69,7 +69,7 @@ say $expr;
 
 > 棘轮用于单向驱动, 防止逆转。
 
-[source,perl6]
+[source,raku]
 .ratcheing
 ----
 my regex works-but-slow { .+ q } # 可能会回溯
@@ -81,7 +81,7 @@ say so $s ~~ &fails-but-fast; # False, .+ 得到了整个字符串但不回溯
 
 `token` 和 `rule` 的唯一区别就是 `rule` 声明符会让正则中的 `:sigspace` 修饰符起效:
 
-[source,perl6]
+[source,raku]
 ----
 my token non-space-y { 'once' 'upon' 'a' 'time' }
 my rule space-y { 'once' 'upon' 'a' 'time' }
@@ -93,15 +93,15 @@ say 'once upon a time' ~~ &space-y;
 
 具名正则是构建 Grammars 的基础, 所以我们了解完具名正则的声明以及如何引用具名正则之后, 再来看 Grammars 会有一脉相承的感觉。
 　
-Grammars 应该只用于解析文本; 如果你想提取复杂的数据, 推荐 link:http://doc.perl6.org/language/grammars#Action_Objects[action object]和 grammar 一块使用。
+Grammars 应该只用于解析文本; 如果你想提取复杂的数据, 推荐 link:http://doc.raku.org/language/grammars#Action_Objects[action object]和 grammar 一块使用。
 
 === Proto regexes
 
-link:https://docs.perl6.org/type/Grammar[Grammars] 是由 rules, tokens, regexes 组成的; 这些 rules, tokens, regexes 实际上就是方法, 因为 grammars 是类。
-这些方法可以共享共同的名称和功能，因此可以使用 link:https://docs.perl6.org/syntax/proto[proto]。
+link:https://docs.raku.org/type/Grammar[Grammars] 是由 rules, tokens, regexes 组成的; 这些 rules, tokens, regexes 实际上就是方法, 因为 grammars 是类。
+这些方法可以共享共同的名称和功能，因此可以使用 link:https://docs.raku.org/syntax/proto[proto]。
 如果你有很多备选分支(alternations), 那么生成可读性好的代码或子类化(subclass)你的 grammar 可能会变得很困难。在下面的 `Actions` 类中, `TOP` 方法中的三元操作符不是很完美并且当我们添加更多的运算符时它会变得更糟糕:
 
-[source,perl6]
+[source,raku]
 ----
 grammar Calculator {
     token TOP { [ <add> | <sub> ] }
@@ -124,7 +124,7 @@ say Calculator.parse('2 + 3', actions => Calculations).made;
 
 为了让世界变得更加美好, 我们可以在 tokens 身上使用看起来像 `:sym<...>` 那样的副词来使用原型正则:
 
-[source,perl6]
+[source,raku]
 ----
 grammar Calculator {
     token TOP { <calc-op> }
@@ -154,7 +154,7 @@ say Calculator.parse('2 + 3', actions => Calculations).made;
 
 当你子类化(subclass)那个 grammar 和 actions 类的时候才能看到这个方法的真正魅力。假设我们想为 calculator 增加一个乘法功能:
 
-[source,perl6]
+[source,raku]
 ----
 grammar BetterCalculator is Calculator {
     rule calc-op:sym<mult> { <num> '*' <num> }
@@ -176,7 +176,7 @@ say BetterCalculator.parse('2 * 3', actions => BetterCalculations).made;
 
 ==== TOP
 
-[source,perl6]
+[source,raku]
 ----
 grammar Foo {
     token TOP { \d+ }
@@ -193,14 +193,14 @@ grammar Foo {
 
 当使用 `rule` 而非 `token` 时, 原子(atom)后面的任何空白(whitespace)被转换为一个对 `ws` 的非捕获调用。即:
 
-[source,perl6]
+[source,raku]
 ----
 rule entry { <key> '=' <value> }
 ----
 
 等价于:
 
-[source,perl6]
+[source,raku]
 ----
 token entry { <key> <.ws> ’=’ <.ws> <value> <.ws> } # . = non-capturing
 ----
@@ -209,7 +209,7 @@ token entry { <key> <.ws> ’=’ <.ws> <value> <.ws> } # . = non-capturing
 
 提供你自己的 `ws` token 是极好的:
 
-[source,perl6]
+[source,raku]
 ----
 grammar Foo {
     rule TOP { \d \d }
@@ -229,7 +229,7 @@ grammar Bar {
 
 在 action 类中, 我们使用对 succ 方法的调用来设置(在这个例子中, 我们在 `@!numbers` 中准备了一个新元素)。在 `digit` 方法中, 我们把阿拉伯数字转换为梵文数字并且把它添加到 @!numbers 数组的最后一个元素中。多亏了 `succ`, 最后一个元素总是当前正被解析的 `digit` 数字的数。
 
-[source,perl6]
+[source,raku]
 ----
 grammar Digifier {
     rule TOP {
@@ -253,9 +253,9 @@ say Digifier.parse('255 435 777', actions => Devanagari.new).made;
 
 === Grammar 中的方法
 
-在 grammar 中使用 `method` 代替 `rule` 或 `token` 也是可以的, 只要它们返回一个 link:https://docs.perl6.org/type/Cursor[Cursor] 类型:
+在 grammar 中使用 `method` 代替 `rule` 或 `token` 也是可以的, 只要它们返回一个 link:https://docs.raku.org/type/Cursor[Cursor] 类型:
 
-[source,perl6]
+[source,raku]
 ----
 grammar DigitMatcher {
     method TOP (:$full-unicode) {
@@ -268,7 +268,7 @@ grammar DigitMatcher {
 
 上面的 grammar 会根据 parse 方法提供的参数尝试不同的匹配:
 
-[source,perl6]
+[source,raku]
 ----
 say +DigitMatcher.subparse: '12७१७९०९', args => \(:full-unicode);
 # OUTPUT:
@@ -287,7 +287,7 @@ say +DigitMatcher.subparse: '12७१७९०९', args => \(:!full-unicode);
 
 这儿有一个例子来说明 grammar 和 action：
 
-[source,perl6]
+[source,raku]
 ----
 grammar TestGrammar {
     token TOP { ^ \d+ $ }
@@ -310,7 +310,7 @@ say $match.made;  # 42
 
 下面是一个更有说服力的例子:
 
-[source,perl6]
+[source,raku]
 ----
 grammar KeyValuePairs {
     token TOP {
@@ -360,7 +360,7 @@ Key: perl       Value: 6
 
 注意, `token ws` 有点特殊: 当 `:sigspace` 开启的时候(就是我们使用 `rule` 的时候), 我们覆写的 `ws` 会替换某些空白序列。这就是为什么 `rule pair` 中等号两边的空格解析没有问题并且闭合 `}` 之前的空白不会狼吞虎咽地吃下换行符, 因为换行符在 `TOP` token 已经占位置了, 并且 token 不会回溯。
 
-[source,perl6]
+[source,raku]
 ----
 # ws 的内置定义
 / <.ws> /                # match "whitespace":
@@ -376,7 +376,7 @@ Key: perl       Value: 6
 
 === Grammar with Action
 
-[source,perl6]
+[source,raku]
 ----
 grammar StationDataParser {
     token TOP          { ^ <keyval>+ <observations> $             }
@@ -432,7 +432,7 @@ EOCSV
 
 === 解析售票数据
 
-[source,perl6]
+[source,raku]
 ----
 grammar SalesExport::Grammar {
     token TOP { ^ <country>+ $ }
@@ -553,7 +553,7 @@ say $grammar_object<country>»<name>.Str;
 只能在叶子节点上(最后一个正则名字的前面)使用超运算符 `»`。 `S/` 匹配对象中, 键就是正则的名字, 键值就是匹配到的部分内容.
 
 
-[source,perl6]
+[source,raku]
 ----
 grammar SalesExport::Grammar {
     token TOP { ^ <country>+ $ }
@@ -632,7 +632,7 @@ for @$grammar_action -> $p {
 
 这将打印:
 
-[source,perl6]
+[source,raku]
 ----
 Norway
 Ukraine

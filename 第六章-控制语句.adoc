@@ -2,7 +2,7 @@
 
 === for
 
-[source,perl6]
+[source,raku]
 ----
 .say for @list
 ----
@@ -13,7 +13,7 @@
 
 `gather` 是一个语句或者能返回一序列值的 block 前缀。该值来自于 gather 块中的动态作用域的 take 调用。
 
-[source,perl6]
+[source,raku]
 ----
 my $a = gather {
     take 1;
@@ -26,7 +26,7 @@ say join ', ', @$a;          # 1, 5, 42
 `gather/take` 能根据上下文按需(惰性地)生成值。如果你想强制惰性求值则使用 `lazy` 子例程或方法。绑定到一个标量或无符号的容器上也会强制惰性求值。
 举个例子:
 
-[source,perl6]
+[source,raku]
 ----
 my @vals = lazy gather {
     take 1;
@@ -46,7 +46,7 @@ say @vals[1];
 
 `gather/take` 是动态作用域的, 所以你可以从 gather 内部所调用的 subs 或方法中调用 take:
 
-[source,perl6]
+[source,raku]
 ----
 sub weird(@elems, :$direction = 'forward') {
     my %direction = (
@@ -60,9 +60,9 @@ sub weird(@elems, :$direction = 'forward') {
 say weird(<a b c>, :direction<backward> );          # (c b a)
 ----
 
-如果值需要在调用者这边可变, 那么使用 link:https://docs.perl6.org/type/Mu#routine_take-rw[take-rw]
+如果值需要在调用者这边可变, 那么使用 link:https://docs.raku.org/type/Mu#routine_take-rw[take-rw]
 
-[source,perl6]
+[source,raku]
 ----
 my @a = 1...3;
 sub f(@list){ gather for @list { take-rw $_ } };
@@ -72,7 +72,7 @@ say @a; # OUTPUT«[2 3 4]»
 
 === gather/for
 
-[source,perl6]
+[source,raku]
 .gather for
 ----
 my @geese = ["African", "Roman Tufted", "Toulouse", "Pilgrim", "Steinbacher"] ;

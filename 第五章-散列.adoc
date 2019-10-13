@@ -2,7 +2,7 @@
 
 === 散列操作
 
-[source,perl6]
+[source,raku]
 ----
 my %dev      = 'pugs'=>'audreyt', 'pct'=>'pm', "STD"=>'larry';
 my %same_dev = :rakudo('jnthn'), :testsuite('moritz');                      # 副词 (pair) 语法同样有效
@@ -54,31 +54,31 @@ say %dev.push(@pairs);         # 插入一组 pair 对儿, 如果某个键已经
 
 你可以解构散列, 解构的语法是：
 
-[source,perl6]
+[source,raku]
 ----
 %hash (:$key, :$value)
 ----
 
 
-[source,perl6]
+[source,raku]
 ----
 %hash (:key($variable-to-store-value-in))
 ----
 
 如果你只对所要提取的值感兴趣, 那么散列甚至可以是匿名的:
 
-[source,perl6]
+[source,raku]
 ----
 sub key-of(% (:value($val), :qua($qua))) {
   say "Got val $val, $qua times.";
 }
 ----
 
-[source,perl6]
+[source,raku]
 ----
 # Then call it with a hash: (you need to keep the brackets for it to be a hash)
 key-of({value => 'foo', qua => 1});
-my %hash = value => 'Perl6', qua => '2019';
+my %hash = value => 'Raku', qua => '2019';
 key-of(%hash); # the same (for an equivalent `%hash`);
 ----
 

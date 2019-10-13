@@ -1,13 +1,13 @@
 == Whatever Star
 
-冒号和星号是 Perl 6 中比较有特色的俩个符号, 上次我们介绍了冒号, 今天我们来看一看星号 `*`:
+冒号和星号是 Raku 中比较有特色的俩个符号, 上次我们介绍了冒号, 今天我们来看一看星号 `*`:
 
 === 动态变量
 
 
 ==== $*ARGFILES - 不可思议的命令行输入句柄
 
-[source,perl6]
+[source,raku]
 .argfiles.pl6
 ----
 $*ARGFILES.perl.say; #=> IO::Handle.new(:path(Any),:chomp)
@@ -25,16 +25,16 @@ for $*ARGFILES.lines -> $line {
 [source,shell]
 .USAGE
 ----
-$ perl6 argfiles.pl6 file1 file2 file3 ...
+$ raku argfiles.pl6 file1 file2 file3 ...
 ----
 
-- link:http://doc.perl6.org/type/IO::Handle[IO::Handle]
-- link:http://doc.perl6.org/language/io[Input/Output]
-- link:http://qiita.com/syohex/items/0a7782920968ab105ba0[Perl6文件操作]
+- link:http://doc.raku.org/type/IO::Handle[IO::Handle]
+- link:http://doc.raku.org/language/io[Input/Output]
+- link:http://qiita.com/syohex/items/0a7782920968ab105ba0[Raku文件操作]
 
 ==== @*ARGS - 来自命令行的参数
 
-[source,perl6]
+[source,raku]
 .agrs.pl6
 ----
 say @*ARGS.WAHT;    #=> (Array)
@@ -45,14 +45,14 @@ say @*ARGS.perl;    #=> ["a", "b", "c", "d", "e"]
 [source,shell]
 .USAGE
 ----
-$ perl6 args.pl6 a b c d e
+$ raku args.pl6 a b c d e
 ----
 
-- link:http://doc.perl6.org/type/Array[Array]
+- link:http://doc.raku.org/type/Array[Array]
 
 ==== $*IN - 标准输入文件句柄, 等同于 stdin
 
-[source,perl6]
+[source,raku]
 .in.pl6
 ----
 say $*IN.perl;   #=> IO::Handle.new(:path(IO::Special.new(what => "<STDIN>")),:chomp)
@@ -65,20 +65,20 @@ say $*IN.chomp;  #=> True
 [source,shell]
 .USAGE
 ----
-$ perl6 in.pl6
+$ raku in.pl6
 你好
 ----
 
-[source,perl6]
+[source,raku]
 .USAGE
 ----
-$ cat somefile.txt | perl6 in.pl6
+$ cat somefile.txt | raku in.pl6
 ----
 
 ==== $*OUT - 标准输出文件句柄, 等同于 stdout
 
 
-[source,perl6]
+[source,raku]
 .out.pl6
 ----
 say $*OUT.perl;   #=> IO::Handle.new(:path(IO::Special.new(what => "<STDOUT>")),:chomp)
@@ -107,15 +107,15 @@ $*OUT.say( q:to/新年快乐/ );
 [source,shell]
 .USAGE
 ----
-$ perl6 out.pl6
-$ perl6 out.pl6 > result.txt
+$ raku out.pl6
+$ raku out.pl6 > result.txt
 ----
 
-- link:http://doc.perl6.org/type/IO[IO]
+- link:http://doc.raku.org/type/IO[IO]
 
 ==== $*ERR - 标准错误文件句柄, 等同于 stderr
 
-[source,perl6]
+[source,raku]
 .err.pl6
 ----
 say $*ERR.perl;   #=> IO::Handle.new(:path(IO::Special.new(what => "<STDERR>")),:chomp)
@@ -131,13 +131,13 @@ $*ERR.say("我错了");
 [source,shell]
 .USAGE
 ----
-$ perl6 err.pl6 > /dev/null
+$ raku err.pl6 > /dev/null
 我错了
 ----
 
 ==== $*REPO - 保存所安装/加载的模块信息的变量
 
-[source,perl6]
+[source,raku]
 .repo.pl6
 ----
 say $*REPO;
@@ -150,7 +150,7 @@ say $*REPO.repo-chain;
 
 ==== $*TZ - 系统的本地时区
 
-[source,perl6]
+[source,raku]
 .tz.pl6
 ----
 say $*TZ;      #=> 32400
@@ -161,7 +161,7 @@ say $*TZ.WHAT; #=> (Int)
 
 ==== $*CWD - 当前工作目录
 
-[source,perl6]
+[source,raku]
 .cwd.pl6
 ----
 say $*CWD;       #=> "/Users/kujira".IO
@@ -171,7 +171,7 @@ say $*CWD.perl;  #=> "/Users/kujira".IO(:SPEC(IO::Spec::Unix),:CWD("/Users/kujir
 
 ==== $*KERNEL - 我是为哪个内核编译的?
 
-[source,perl6]
+[source,raku]
 .kernel.pl6
 ----
 say $*KERNEL;            #=> darwin (18.5.0)
@@ -188,7 +188,7 @@ say $*KERNEL.WHAT;        #=> (Kernel)
 
 ==== $*DISTRO - 我在哪个操作系统发行版下编译?
 
-[source,perl6]
+[source,raku]
 .distro.pl6
 ----
 say $*DISTRO;           #=> macosx (10.14.4)
@@ -210,7 +210,7 @@ say $*DISTRO.perl;      #=> Distro.new(release => "18E226", is-win => Bool::Fals
 
 ==== $*VM - 我在哪个虚拟机下编译?
 
-[source,perl6]
+[source,raku]
 .vm.pl6
 ----
 say $*VM;         #=> moar (2019.03)
@@ -220,18 +220,18 @@ say $*VM.perl;
 
 ==== $*PERL - 我是为哪个 Perl 编译的?
 
-[source,perl6]
+[source,raku]
 .perl.pl6
 ----
-say $*PERL;          #=> Perl 6 (6.d)
+say $*PERL;          #=> Raku (6.d)
 say $*PERL.compiler; #=> rakudo (2019.03)
 
-say $*PERL.perl;     #=> Perl.new(compiler => Compiler.new(id => "E8252BAA8CCA5C482BDD1088C325C513F7B95D46", release => "", codename => "", name => "rakudo", auth => "The Perl Foundation", version => v2019.03, signature => Blob, desc => Str), name => "Perl 6", auth => "The Perl Foundation", version => v6.d, signature => Blob, desc => Str)
+say $*PERL.perl;     #=> Perl.new(compiler => Compiler.new(id => "E8252BAA8CCA5C482BDD1088C325C513F7B95D46", release => "", codename => "", name => "rakudo", auth => "The Perl Foundation", version => v2019.03, signature => Blob, desc => Str), name => "Raku", auth => "The Perl Foundation", version => v6.d, signature => Blob, desc => Str)
 ----
 
 ==== $*PID - 当前进程的进程 ID
 
-[source,perl6]
+[source,raku]
 .pid.pl6
 ----
 say $*PID;      #=> 91224
@@ -241,7 +241,7 @@ say $*PID.WHAT; #=> (Int)
 
 ==== $*PROGRAM-NAME - 当前可执行文件的路径
 
-[source,perl6]
+[source,raku]
 .program-name.pl6
 ----
 say $*PROGRAM-NAME;
@@ -251,7 +251,7 @@ say $*PROGRAM-NAME.IO.basename;
 
 ==== $*PROGRAM - 当前执行的 Perl 程序的位置
 
-[source,perl6]
+[source,raku]
 .program.pl6
 ----
 say $*PROGRAM;        #=> "/Users/kujira/program.pl6".IO
@@ -268,31 +268,31 @@ say $*PROGRAM.WHAT;   #=> (Path)
 ==== $*EXECUTABLE - 当前运行的 perl 可执行文件的绝对路径
 
 
-[source,perl6]
+[source,raku]
 .executable.pl6
 ----
-say $*EXECUTABLE;           #=> "/usr/local/bin/perl6".IO
-say $*EXECUTABLE.Str;       #=> /usr/local/bin/perl6
-say $*EXECUTABLE.basename;  #=> perl6
+say $*EXECUTABLE;           #=> "/usr/local/bin/raku".IO
+say $*EXECUTABLE.Str;       #=> /usr/local/bin/raku
+say $*EXECUTABLE.basename;  #=> raku
 
 say $*EXECUTABLE.WHAT;      #=> (Path)
 
-say $*EXECUTABLE.perl;      #=> "/usr/local/bin/perl6".IO(:SPEC(IO::Spec::Unix))
+say $*EXECUTABLE.perl;      #=> "/usr/local/bin/raku".IO(:SPEC(IO::Spec::Unix))
 say $*EXECUTABLE.SPEC;      #=> (Unix)
 ----
 
 ==== $*EXECUTABLE-NAME - 当前运行的 perl 可执行文件的名字
 
-[source,perl6]
+[source,raku]
 .executable-name.pl6
 ----
-say $*EXECUTABLE-NAME;       #=> perl6
+say $*EXECUTABLE-NAME;       #=> raku
 say $*EXECUTABLE-NAME.WHAT;  #=> (Str)
 ----
 
 ==== $*USER - 运行该程序的用户
 
-[source,perl6]
+[source,raku]
 .user.pl6
 ----
 say $*USER;      #=> ohmycloud
@@ -303,7 +303,7 @@ say $*USER.perl; #=> IntStr.new(501, "ohmycloud")
 
 ==== $*GROUP - 运行该程序的用户的主要组
 
-[source,perl6]
+[source,raku]
 .group.pl6
 ----
 say $*GROUP;       #=> staff
@@ -314,7 +314,7 @@ say $*GROUP.perl;  #=> IntStr.new(20, "staff")
 
 ==== $*HOME - 运行该程序的用户的家目录
 
-[source,perl6]
+[source,raku]
 .home.pl6
 ----
 say $*HOME;       #=> "/Users/ohmycloud".IO
@@ -326,16 +326,16 @@ say $*HOME.WHAT;  #=> (Path)
 say $*HOME.perl;  #=> IO::Path.new("/Users/ohmycloud", :SPEC(IO::Spec::Unix), :CWD("/Users/ohmycloud"))
 ----
 
-- link:http://doc.perl6.org/type/IO::Path[IO::Path]
+- link:http://doc.raku.org/type/IO::Path[IO::Path]
 
 ==== $*SPEC - 该程序所运行的平台
 
-[source,perl6]
+[source,raku]
 .spec.pl6
 ----
 say $*SPEC;          #=> (Unix)
 say $*SPEC.perl;     #=> IO::Spec::Unix
-say $*SPEC.path;     #=> (/usr/local/Cellar/rakudo-star/2019.03/share/perl6/site/bin /usr/local/sbin /usr/local/bin /usr/bin /bin /usr/sbin /sbin)
+say $*SPEC.path;     #=> (/usr/local/Cellar/rakudo-star/2019.03/share/raku/site/bin /usr/local/sbin /usr/local/bin /usr/bin /bin /usr/sbin /sbin)
 say $*SPEC.tmpdir;   #=> "/var/folders/ys/992mqs3s4px485rtg4t7jc3r0000gn/T/".IO
 say $*SPEC.dir-sep;  #=> /
 say $*SPEC.curdir;   #=> .
@@ -347,7 +347,7 @@ say $*SPEC.devnull;  #=> /dev/null
 
 === Whatever Star
 
-在 Perl 6 中，根据上下文的不同，您可以叫它星星（或者，如果你愿意的话，可以叫它星号）或者 *whatever*。
+在 Raku 中，根据上下文的不同，您可以叫它星星（或者，如果你愿意的话，可以叫它星号）或者 *whatever*。
 
 
 让我们看看 `\*` 的不同用法，从最简单的开始，旨在了解最烧脑的例如 `* ** *`。
@@ -358,7 +358,7 @@ say $*SPEC.devnull;  #=> /dev/null
 
 单个星号用于乘法。严格来讲, 这是一个中缀运算符 `infix:<*>`, 它的返回值为 `Numeric`。
 
-[source,perl6]
+[source,raku]
 .multiplication
 ----
 say 20 * 18; # 360
@@ -368,7 +368,7 @@ say 20 * 18; # 360
 
 两个星号 `+++**+++` 是幂运算符。再次, 这是一个中缀运算符 `infix:<**>`, 它返回 `Numeric` 结果, 计算两个给定值的幂。
 
-[source,perl6]
+[source,raku]
 .power
 ----
 say pi ** e; # 22.4591577183611
@@ -376,11 +376,11 @@ say pi ** e; # 22.4591577183611
 
 ==== 3. 零或多次重复
 
-正则表达式中同样也使用了两个标记（ `\*` 或 `**`），它们表示不同的东西。 Perl 6 的一个特点是它可以很容易地在不同的语言之间切换。 正则表达式和 grammar 都是这样的内部语言的例子，其中同样的符号在 Perl 6 中可能意味着不同的含义。
+正则表达式中同样也使用了两个标记（ `\*` 或 `**`），它们表示不同的东西。 Raku 的一个特点是它可以很容易地在不同的语言之间切换。 正则表达式和 grammar 都是这样的内部语言的例子，其中同样的符号在 Raku 中可能意味着不同的含义。
 
 `*` 号量词这个语法条目和 Perl 5 中点行为类似: 允许原子的零次或多次重复。
 
-[source,perl6]
+[source,raku]
 ----
 my $weather = '*****';
 my $snow = $weather ~~ / ('*'*) /;
@@ -393,18 +393,18 @@ say 'Snow level is ' ~ $snow.chars; # Snow level is 5
 
 两个 `**` 号是另一个量词的一部分，它指定了最小和最大重复次数:
 
-[source,perl6]
+[source,raku]
 ----
 my $operator = '..';
-say "'$operator' is a valid Perl 6 operator"
+say "'$operator' is a valid Raku operator"
     if $operator ~~ /^ '.' ** 1..3 $/;
 ----
 
 在这个例子中，预计这个点会被重复一次，两次或三次; 不多也不少。
 
-让我们超前一点儿，以 `Whatever` 符号的角色（剧场中的角色，而不是 Perl 6 的面向对象编程）使用星号：
+让我们超前一点儿，以 `Whatever` 符号的角色（剧场中的角色，而不是 Raku 的面向对象编程）使用星号：
 
-[source,perl6]
+[source,raku]
 ----
 my $phrase = 'I love you......';
 say 'You are so uncertain...'
@@ -418,9 +418,9 @@ say 'You are so uncertain...'
 
 在子例程签名的数组参数之前的星号意味着吞噬参数 - 将单独的标量参数吞噬进单个数组中。
 
-[source,perl6]
+[source,raku]
 ----
-list-gifts('chocolade', 'ipad', 'camelia', 'perl6');
+list-gifts('chocolade', 'ipad', 'camelia', 'raku');
 
 sub list-gifts(*@items) {
     say 'Look at my gifts this year:';
@@ -430,7 +430,7 @@ sub list-gifts(*@items) {
 
 哈希也允许吞噬参数：
 
-[source,perl6]
+[source,raku]
 ----
 dump(alpha => 'a', beta => 'b'); # Prints:
                                  # alpha = a
@@ -441,7 +441,7 @@ sub dump(*%data) {
 }
 ----
 
-请注意，与 Perl 5 不同的是，如果您省略函数签名中的星号，代码将无法编译，因为 Perl 6 就是说一不二：
+请注意，与 Perl 5 不同的是，如果您省略函数签名中的星号，代码将无法编译，因为 Raku 就是说一不二：
 
 ```
 Too few positionals passed; expected 1 argument but got 0
@@ -453,14 +453,14 @@ Too few positionals passed; expected 1 argument but got 0
 
 带一颗星星：
 
-[source,perl6]
+[source,raku]
 ----
 my @a = < chocolade ipad >;
-my @b = < camelia perl6 >;
+my @b = < camelia raku >;
 
 all-together(@a, @b);
-all-together(['chocolade', 'ipad'], ['camelia', 'perl6']);
-all-together(< chocolade ipad >, < camelia perl6 >);
+all-together(['chocolade', 'ipad'], ['camelia', 'raku']);
+all-together(< chocolade ipad >, < camelia raku >);
 
 sub all-together(*@items) {
     .say for @items;
@@ -473,24 +473,24 @@ sub all-together(*@items) {
 chocolade
 ipad
 camelia
-perl6
+raku
 chocolade
 ipad
 camelia
-perl6
+raku
 chocolade
 ipad
 camelia
-perl6
+raku
 ```
 
 带俩颗星星：
 
-[source,perl6]
+[source,raku]
 ----
 keep-groupped(@a, @b);
-keep-groupped(['chocolade', 'ipad'], ['camelia', 'perl6']);
-keep-groupped(< chocolade ipad >, < camelia perl6 >);
+keep-groupped(['chocolade', 'ipad'], ['camelia', 'raku']);
+keep-groupped(< chocolade ipad >, < camelia raku >);
 
 sub keep-groupped(**@items) {
     .say for @items;
@@ -501,21 +501,21 @@ sub keep-groupped(**@items) {
 
 ```
 [chocolade ipad]
-[camelia perl6]
+[camelia raku]
 ```
 
 或
 
 ```
 (chocolade ipad)
-(camelia perl6)
+(camelia raku)
 ```
 
 ==== 7. 动态作用域
 
 `*` twigil，引入了动态作用域。 动态变量和全局变量很容易搞混淆，所以最好测试下面的代码。
 
-[source,perl6]
+[source,raku]
 ----
 sub happy-new-year() {
     "Happy new $*year year!"
@@ -536,7 +536,7 @@ Variable '$year' is not declared
 
 对于动态变量，将新值赋给现有变量还是创建新变量并不重要：
 
-[source,perl6]
+[source,raku]
 ----
 sub happy-new-year() {
     "Happy new $*year year!"
@@ -558,11 +558,11 @@ say happy-new-year();
 
 ==== 8. 编译变量
 
-Perl 6 提供了许多伪动态常量, 例如:
+Raku 提供了许多伪动态常量, 例如:
 
-[source,perl6]
+[source,raku]
 ----
-say $*PERL;      # Perl 6 (6.d)
+say $*PERL;      # Raku (6.d)
 say @*ARGS;      # Prints command-line arguments
 say %*ENV<HOME>; # Prints home directory
 ----
@@ -572,7 +572,7 @@ say %*ENV<HOME>; # Prints home directory
 
 `.*` postfix 伪运算符调用给定名称的所有方法，名称可以在给定的对象中找到，并返回一个结果列表。 在微不足道的情况下，你会得到一个学术上荒诞不羁的代码：
 
-[source,perl6]
+[source,raku]
 .call with star
 ----
 6.*perl.*say; # (6 Int.new)
@@ -580,7 +580,7 @@ say %*ENV<HOME>; # Prints home directory
 
 带星号的代码与不带星号代码有些不同：
 
-[source,perl6]
+[source,raku]
 .call without star
 ----
 pi.perl.say; # 3.14159265358979e0 (notice the scientific
@@ -589,7 +589,7 @@ pi.perl.say; # 3.14159265358979e0 (notice the scientific
 
 `.*` postfix 的真正威力来自于继承。 它有时有助于揭示真相：
 
-[source,perl6]
+[source,raku]
 .dot star and inheritance
 ----
 class Present {
@@ -612,7 +612,7 @@ $present.*giver.join(', ').say; # Santa Claus, parents
 
 一个星号就差别很大!
 
-现在，到了 Perl 6 最神秘的部分。接下来的两个概念，`Whatever` 和 `WhateverCode` 类，很容易混淆在一起。 让我们试着做对吧。
+现在，到了 Raku 最神秘的部分。接下来的两个概念，`Whatever` 和 `WhateverCode` 类，很容易混淆在一起。 让我们试着做对吧。
 
 ==== 10. Whatever
 
@@ -620,11 +620,11 @@ Whatever 是什么呢? Placeholder for unspecified value/parameter - 未指定�
 
 `*` 字面量在 「项」 的位置上创建 「Whatever」 对象。
 
-单个星号 `*` 能表示任何东西(`Whatever`)。 `Whatever` 在 Perl 6 中是一个预定义好的类, 它在某些有用的场景下引入了一些规定好的行为。
+单个星号 `*` 能表示任何东西(`Whatever`)。 `Whatever` 在 Raku 中是一个预定义好的类, 它在某些有用的场景下引入了一些规定好的行为。
 
 例如，在范围和序列中，最后的 `*` 表示无穷大。 我们今天已经看到了一个例子。 这是另一个：
 
-[source,perl6]
+[source,raku]
 .* represent Inf in range and sequence
 ----
 .say for 1 .. *;
@@ -632,9 +632,9 @@ Whatever 是什么呢? Placeholder for unspecified value/parameter - 未指定�
 
 这个单行程序具有非常高的能量转换效率，因为它产生了一个递增整数的无限列表。 如果你要继续，请按 `Ctrl + C`。
 
-范围 `1 .. *` 与 `1 .. Inf` 相同。 您可以清楚地看到，如果您跳转到 Rakudo Perl 6 源文件并在 `Range` 类的实现中找到如下定义：
+范围 `1 .. *` 与 `1 .. Inf` 相同。 您可以清楚地看到，如果您跳转到 Rakudo Raku 源文件并在 `Range` 类的实现中找到如下定义：
 
-[source,perl6]
+[source,raku]
 .link:https://github.com/rakudo/rakudo/blob/master/src/core/Range.pm[src/core/Range.pm]
 ----
 multi method new(Whatever \min,Whatever \max,:$excludes-min,:$excludes-max){
@@ -671,7 +671,7 @@ multi method new(\min, Whatever \max, :$excludes-min, :$excludes-max) {
 
 回到我们更实际的问题，让我们创建自己的使用 whatever 符号 `*` 的类，。 下面是一个简单的例子，它带有一个接收 `Int` 值或者 `Whatever` 的 multi-方法。
 
-[source,perl6]
+[source,raku]
 ----
 class N {
     multi method display(Int $n) {
@@ -687,7 +687,7 @@ class N {
 
 下面是你如何使用这个类：
 
-[source,perl6]
+[source,raku]
 ----
 my $n = N.new;
 $n.display(2018);
@@ -698,7 +698,7 @@ $n.display(*);
 
 `Whatever` 符号可以作为一个裸的 `Whatever`。 假如，你创建一个 `echo` 函数，并将 `*` 传递给它：
 
-[source,perl6]
+[source,raku]
 ----
 sub echo($x) {
     say $x;
@@ -753,7 +753,7 @@ echo(*);    # *
 
 注意不能使用嵌套的闭包:
 
-[source,perl6]
+[source,raku]
 ----
 (1..5).map: { * ** 2 }
 ----
@@ -770,21 +770,21 @@ at line 2
 
 方法一: 使用 `$_` 代替 `*` 号
 
-[source,perl6]
+[source,raku]
 ----
 (1..5).map: { $_ ** 2 }
 ----
 
 方法二: 移除花括号
 
-[source,perl6]
+[source,raku]
 ----
 (1..5).map:  * ** 2
 ----
 
 方法三: 显式的使用闭包
 
-[source,perl6]
+[source,raku]
 ----
 (1..5).map: -> $item { $item ** 2 }
 ----
@@ -793,32 +793,32 @@ at line 2
 
 最后, 我们来谈谈 `WhateverCode`。`*` 的大部分魔法来自于 「Whatever 柯里化」. 当 `*` 作为项与很多运算符组合使用时, 编译器会把表达式转换为 「WhateverCode」 类型的闭包.
 
-[source,perl6]
+[source,raku]
 ----
 my $c = * + 2;          # 等价于 my $c = -> $x { $x + 2 };
 say $c(4);              # 6
 say $c.WHAT             # (WhateverCode)
 ----
 
-`my $c = -> $x { $x + 2 }` 中, `$c` 是一个 link:https://docs.perl6.org/type/Block[Block]
+`my $c = -> $x { $x + 2 }` 中, `$c` 是一个 link:https://docs.raku.org/type/Block[Block]
 
 如果一个表达式中有 N 个 `*`, 则会产生一个含有 N 个参数的闭包:
 
-[source,perl6]
+[source,raku]
 ----
 my $c = * + *;          # 等价于 my $c = -> $x, $y { $x + $y }
 ----
 
 在复杂的表达式中使用 `*` 也会产生闭包:
 
-[source,perl6]
+[source,raku]
 ----
 my $c = 4 * * + 5;      # 等价于 my $c = -> $x { 4 * $x + 5 }
 ----
 
 在 `*` 号身上调用方法也会产生闭包:
 
-[source,perl6]
+[source,raku]
 ----
 <a b c>.map: *.uc;     # 等价于 <a b c>.map: -> $char { $char.uc }
 ----
@@ -827,13 +827,13 @@ Whatever 最强大的用处是 「Whatever」 闭包。
 
 对于 Whatever 没有特殊意义的普通操作符：把 Whatever 当作参数传递时就创建了一个闭包！ 所以，举个例子：
 
-[source,perl6]
+[source,raku]
 ----
 * + 1 # 等价于 -> $a { $a + 1 }
 * + * # 等价于 -> $a, $b { $a + $b }
 ----
 
-[source,perl6]
+[source,raku]
 ----
 @list.grep(* > 10)                  # 返回 @list 数组中所有大于 10 的元素
 @list.grep( -> $e { $e > 10 } )     # 同上, 使用显式的闭包
@@ -845,18 +845,18 @@ Whatever 最强大的用处是 「Whatever」 闭包。
 @list.map( -> $a, $b { $a+$b } )    # 同上, 使用显式的闭包
 ----
 
-取一个数组然后打印出它的最后一个元素。如果你使用 Perl 5 的风格来做, 你会键入 `@a[-1]` 那样的东西。在 Perl 6 中, 那会产生错误:
+取一个数组然后打印出它的最后一个元素。如果你使用 Perl 5 的风格来做, 你会键入 `@a[-1]` 那样的东西。在 Raku 中, 那会产生错误:
 
 [source,shell]
 ----
 Unsupported use of a negative -1 subscript
-to index from the end; in Perl 6 please
+to index from the end; in Raku please
 use a function such as *-1
 ----
 
 编译器建议使用一个函数, 例如 `*-1`。它是函数吗？是的, 更准确的说, 它是一个 `WhateverCode` 块:
 
-[source,perl6]
+[source,raku]
 .WhateverCode
 ----
 say (*-1).WHAT; # (WhateverCode)
@@ -866,7 +866,7 @@ say (*-1).WHAT; # (WhateverCode)
 
 数组的最后一个元素:
 
-[source,perl6]
+[source,raku]
 ----
 my @a =  1,22,33,11;
 say @a[*-1];
@@ -875,7 +875,7 @@ say @a[->$a {$a-1}]; # $a  即为数组@a 的元素个数
 
 数组的倒数第二个元素
 
-[source,perl6]
+[source,raku]
 ----
 say @a[*-2];
 say @a[->$a {$a-2}];
@@ -885,7 +885,7 @@ say @a[->$a {$a-2}];
 
 现在, 打印数组的后半部分:
 
-[source,perl6]
+[source,raku]
 ----
 my @a = < one two three four five six >;
 say @a[3..*]; # (four five six)
@@ -893,7 +893,7 @@ say @a[3..*]; # (four five six)
 
 数组的索引的范围是 `3 .. *`。 `Whatever` 作为 range 的右端意味着从数组中取出所有剩余的元素。 `3 .. *` 的类型是 `Range`:
 
-[source,perl6]
+[source,raku]
 .Range
 ----
 say (3..*).WHAT; # (Range)
@@ -901,22 +901,22 @@ say (3..*).WHAT; # (Range)
 
 最后，减少一个元素。 我们已经看到，要指定最后一个元素，必须要使用诸如 `*-1` 的函数。 在 range 的右端可以做同样的事情：
 
-[source,perl6]
+[source,raku]
 ----
 say @a[3 .. *-2]; # (four five)
 ----
 
 在这个时候，发生了所谓的 `Whatever-柯里化`，`Range` 变成了 `WhateverCode`:
 
-[source,perl6]
+[source,raku]
 .Whatever-柯里化
 ----
 say (3 .. *-2).WHAT; # (WhateverCode)
 ----
 
-`WhateverCode` 是一个内置的 Perl 6 类名称; 它可以很容易地用于方法分派。 让我们更新上一节中的代码，并添加一个方法变体，它需要一个 `WhateverCode` 参数：
+`WhateverCode` 是一个内置的 Raku 类名称; 它可以很容易地用于方法分派。 让我们更新上一节中的代码，并添加一个方法变体，它需要一个 `WhateverCode` 参数：
 
-[source,perl6]
+[source,raku]
 ----
 class N {
     multi method display(Int $n) {
@@ -935,7 +935,7 @@ class N {
 
 现在，参数列表中的星号要么落入 `display(Whatever)`, 要么落入 `display(WhateverCode)`:
 
-[source,perl6]
+[source,raku]
 ----
 N.display(2018);     # display(Int $n)
 
@@ -947,14 +947,14 @@ N.display(* - 1000); # display(WhateverCode $code)
 
 我们再来看看 `display` 方法中的签名:
 
-[source,perl6]
+[source,raku]
 ----
 multi method display(WhateverCode $code)
 ----
 
 `$code` 参数被用作方法内的函数引用:
 
-[source,perl6]
+[source,raku]
 ----
 say $code(2000 + 100.rand.Int);
 ----
@@ -965,7 +965,7 @@ say $code(2000 + 100.rand.Int);
 
 这是否意味着可以在 `$^a` 的旁边使用 `$^b`? 当然！ 使 `WhateverCode` 块接受两个参数。 你如何指出其中的第二个？ 毫不惊喜，再用一个星号！ 让我们将 `display` 方法的第四个变体添加到我们的类中：
 
-[source,perl6]
+[source,raku]
 ----
 multi method display(WhateverCode $code 
                      where {$code.arity == 2}) {
@@ -975,7 +975,7 @@ multi method display(WhateverCode $code
 
 这里，使用 `where` 块来缩小调度范围，只选择那些有两个参数的 `WhateverCode` 块。 完成此操作后，方法调用中将允许含有两个雪花：
 
-[source,perl6]
+[source,raku]
 ----
 N.display( * + * );
 N.display( * - * );
@@ -985,7 +985,7 @@ N.display( * - * );
 
 需要更多的雪花吗？ 多添加点星星：
 
-[source,perl6]
+[source,raku]
 ----
 N.display( * * * );
 N.display( * ** * );
@@ -993,14 +993,14 @@ N.display( * ** * );
 
 类似地, 里面实际的计算是:
 
-[source,perl6]
+[source,raku]
 ----
 2000 * 100.rand.Int
 ----
 
 和 
 
-[source,perl6]
+[source,raku]
 ----
 2000 ** 100.rand.Int
 ----
@@ -1009,9 +1009,9 @@ N.display( * ** * );
 
 ==== 作业
 
-到目前为止，Perl 6 给了我们很多圣诞礼物。 让我们回过头来做一下练习并回答一下问题：下面代码中的每个星号在意味着什么？
+到目前为止，Raku 给了我们很多圣诞礼物。 让我们回过头来做一下练习并回答一下问题：下面代码中的每个星号在意味着什么？
 
-[source,perl6]
+[source,raku]
 ----
 my @n = 
     ((0, 1, * + * ... *).grep: *.is-prime).map: * * * * *;
@@ -1022,14 +1022,14 @@ my @n =
 
 序列运算符 `...` 之后的 `*` 意味着无限地生成序列，所以用 `Inf` 来代替它:
 
-[source,perl6]
+[source,raku]
 ----
 ((0, 1, * + * ... Inf).grep: *.is-prime).map: * * * * *
 ----
 
 生成器函数中的两个星号 `* + *` 可以用一个带有两个显式参数的 lambda 函数来替换：
 
-[source,perl6]
+[source,raku]
 ----
 ((0, 1, -> $x, $y {$x + $y} ... Inf).grep: 
     *.is-prime).map: * * * * *
@@ -1037,7 +1037,7 @@ my @n =
 
 现在，简单的语法交替。 用带圆括号的方法调用替换 `.grep`。 它的参数 `*.is-prime` 变成一个代码块，并且星号被替换为默认变量 `$_`。 请注意，代码使用 `*` 时不需要花括号。
 
-[source,perl6]
+[source,raku]
 ----
 (0, 1, -> $x, $y {$x + $y} ... Inf).grep({
     $_.is-prime
@@ -1046,7 +1046,7 @@ my @n =
 
 最后，与 `.map` 相同的技巧：但是这次这个方法有三个参数，因此，你可以编写 `{$^a * $^b * $^c}` 而不是 `* * * * *`，这里是新的 完整程序的变体：
 
-[source,perl6]
+[source,raku]
 ----
 my @n = (0, 1, -> $x, $y {$x + $y} ... Inf).grep({
         $_.is-prime
@@ -1062,5 +1062,5 @@ my @n = (0, 1, -> $x, $y {$x + $y} ... Inf).grep({
 
 在教科书中，最具挑战性的任务是用 `*` 标记的。 这里有几个由你自己来解决。
 
-- 1. Perl 6 中的 `chdir('/')` 和 `＆*chdir('/')` 有什么区别？
-- 2. 解释下面的 Perl 6 代码并修改它以展示其优点：`.say for 1 ... **`。
+- 1. Raku 中的 `chdir('/')` 和 `＆*chdir('/')` 有什么区别？
+- 2. 解释下面的 Raku 代码并修改它以展示其优点：`.say for 1 ... **`。

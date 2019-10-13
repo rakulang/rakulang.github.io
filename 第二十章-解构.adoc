@@ -4,7 +4,7 @@
 
 解构和赋值可以结合使用。
 
-[source,perl6]
+[source,raku]
 .deconstruction and assignment
 ----
 my (Str $a, Str $b, Int $c) = <a b>;
@@ -14,7 +14,7 @@ say [$a, $b, $c].perl;
 
 要跳过列表中的元素, 使用匿名状态变量 `$`。
 
-[source,perl6]
+[source,raku]
 .skip variable with `$`
 ----
 my ($,$a,$,%h) = ('a', 'b', [1,2,3], {:1th});
@@ -24,7 +24,7 @@ say [$a, %h].perl;
 
 === 使用签名解构参数
 
-[source,perl6]
+[source,raku]
 .pass hash to routine
 ----
 sub myfunc(%h) {...}
@@ -32,7 +32,7 @@ sub myfunc(%h) {...}
 
 现在我可以使用一个散列来调用该函数:
 
-[source,perl6]
+[source,raku]
 .call myfunc with hash
 ----
 my %h = a => 1, b => 'this', c => 2.2;
@@ -41,7 +41,7 @@ myfunc(%h);
 
 如果我想验证某些特定的键是否符合某种类型：
 
-[source,perl6]
+[source,raku]
 .parameters constraint with where clause
 ----
 my %h = a => 1, b => 'this', c => 2.2;
@@ -60,7 +60,7 @@ myfunc(%h);
 
 如果我还想把散列的各个键赋值给其他变量：
 
-[source,perl6]
+[source,raku]
 .parameters constraint with where clause
 ----
 sub myfunc(
@@ -79,7 +79,7 @@ sub myfunc(
 
 参数后面可以跟着用圆括号包围的子签名, 这就会解构所给定的参数.
 
-[source,perl6]
+[source,raku]
 .hash deconstruction
 ----
 sub myfunc(%h (Int :$a, Str :$b, Rat :$c)) {...}
@@ -89,7 +89,7 @@ sub myfunc(%h (Int :$a, Str :$b, Rat :$c)) {...}
 
 列表的解构正好是列表的元素:
 
-[source,perl6]
+[source,raku]
 .first element of array using destructuring
 ----
 sub first( @array ($first, *@rest) ) { $first }
@@ -99,7 +99,7 @@ sub first(        [$first, *@]     ) { $first }
 
 很神奇吧, 你不用在函数体里面写出 `first` 函数的逻辑, 你只使用子签名, 就自动获得了获取列表首元素的逻辑。
 
-[source,perl6]
+[source,raku]
 .tail elements of array using destructuring
 ----
 sub tail( @array ($first, *@tail) ) { @tail }
@@ -113,7 +113,7 @@ sub tail(        [$,      *@tail] ) { @tail }
 
 散列的解构是它的 pairs:
 
-[source,perl6]
+[source,raku]
 ----
 multi key-type ($ (Numeric :$key, *%)) { "Number" }
 multi key-type ($ (Str     :$key, *%)) { "String" }
@@ -130,9 +130,9 @@ Number
 String
 ----
 
-因为 `=>` 构造了一个 link:http://doc.perl6.org/type/Pair[Pair]，它有一个 `key` 和一个 `value` 属性。子签名中的 `:$key` 命名参数提取属性 `key`。 `\*%` 中的 `%` 是匿名的, `*%` 接收所有剩余参数到一个匿名散列中, 不予使用。
+因为 `=>` 构造了一个 link:http://doc.raku.org/type/Pair[Pair]，它有一个 `key` 和一个 `value` 属性。子签名中的 `:$key` 命名参数提取属性 `key`。 `\*%` 中的 `%` 是匿名的, `*%` 接收所有剩余参数到一个匿名散列中, 不予使用。
 
-[source,perl6]
+[source,raku]
 .anonymous hash deconstruction
 ----
 sub all-dimensions(% (:length(:$x), :width(:$y), :depth(:$z))) {
@@ -142,7 +142,7 @@ sub all-dimensions(% (:length(:$x), :width(:$y), :depth(:$z))) {
 
 尖号块儿循环也能解构散列:
 
-[source,perl6]
+[source,raku]
 .hash deconstruction with pointy block
 ----
 my %hhgttu = (:40life, :41universe, :42everything);
@@ -152,9 +152,9 @@ for %hhgttu -> (:$key, :$value) {
 # OUTPUT: «universe → 41␤life → 40␤everything → 42␤» 
 ----
 
-通常, 对象是基于对象的属性来解构的. 惯用法就是在 for 循环中解包一个 link:https://docs.perl6.org/type/Pair[Pair] 的键和值:
+通常, 对象是基于对象的属性来解构的. 惯用法就是在 for 循环中解包一个 link:https://docs.raku.org/type/Pair[Pair] 的键和值:
 
-[source,perl6]
+[source,raku]
 .pairs deconstruction with pointy block
 ----
 for <Peter Paul Merry>.pairs -> (:key($index), :value($guest)) { }
@@ -183,10 +183,10 @@ sub MAIN(*@timicles where .all ~~ /<number> <[dhms]>/) {
 [source,shell]
 .timicles.pl6
 ----
-perl6 timicles.pl6 1d 2h 3m 5s
+raku timicles.pl6 1d 2h 3m 5s
 ----
 
-对象解包为它们的属性只是默认行为. 要使对象以另外的方式解构, 要更改它的 link:https://docs.perl6.org/routine/Capture[Capture].
+对象解包为它们的属性只是默认行为. 要使对象以另外的方式解构, 要更改它的 link:https://docs.raku.org/routine/Capture[Capture].
 
 
 === 解构 JSON
@@ -195,7 +195,7 @@ perl6 timicles.pl6 1d 2h 3m 5s
 
 假如说一块儿有嵌套结构的 JSON，某些部分可能缺失了, 它们需要默认值, 等等。
 
-[source,perl6]
+[source,raku]
 .parse json to hash object
 ----
 use JSON::Fast;
@@ -213,7 +213,7 @@ my $item = from-json(q:to/END/);
 
 我们可以使用 link:https://github.com/timo/json_fast[JSON::Fast] 的 `from-json()` 将其解析为 perl 中的数据结构。 你可以在函数签名中描述整个 JSON 结构，以便接收以下内容：
 
-[source,perl6]
+[source,raku]
 .anonymous hash deconstruction
 ----
 sub myfunc(% (:%book (Str:D :$title, Str:D :$author), Int :$count,
@@ -227,7 +227,7 @@ sub myfunc(% (:%book (Str:D :$title, Str:D :$author), Int :$count,
 
 当然，签名对于子程序来说是幻想的，但是你也可以在块儿(Block)中使用签名和解构。 假设你有一个上面的 JSON 条目的数组，并希望通过一个 `for` 循环遍历它们？ 只需在 `for` 的尖号块中使用解构签名即可：
 
-[source,perl6]
+[source,raku]
 .hash deconstruction with pointy block
 ----
 for @itemlist -> % (:%book (Str:D :$title, Str:D :$author), Int :$count,
@@ -243,7 +243,7 @@ for @itemlist -> % (:%book (Str:D :$title, Str:D :$author), Int :$count,
 
 你有没有试过遍历一组对象，你所做的第一件事是调用一些访问器来获取一些属性？ 当然，你可以使用 `.attribute` 和 主题化的迭代器，但是使用子签名，你可以做更多。
 
-[source,perl6]
+[source,raku]
 .object deconstruction
 ----
 class Book {
@@ -272,7 +272,7 @@ for @booklist -> Book $b (:$title,:$author, :$count, :@tags) {
 
 再看一个例子:
 
-[source,perl6]
+[source,raku]
 ----
 class body { has ( $.head, @.arms, @.legs ) } # Declare a class (object structure).
 class person { has ( $.mom, $.body, $.age ) } # And another that includes first.

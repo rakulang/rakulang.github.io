@@ -2,7 +2,7 @@
 
 - 限制字符串长度
 
-[source,perl6]
+[source,raku]
 ----
    subset NonEmptyString
        of Str
@@ -28,7 +28,7 @@ Constraint type check failed for parameter '$name'
 
 - 限制值域
 
-[source,perl6]
+[source,raku]
 ----
 subset PointLimit of Int where -10 <= * <= 10;
 sub test(PointLimit $number) {
@@ -46,7 +46,7 @@ small(8);
 
 - 检测密码是否合法
 
-[source,perl6]
+[source,raku]
 ----
 # 安全的密码
 # 至少 8 位
@@ -68,7 +68,7 @@ passwordCheck("abcdABCD");
 
 - 检测密码是否有效并提醒
 
-[source,perl6]
+[source,raku]
 ----
 subset Length8    of Str where *.chars < 8;
 subset UpCase     of Str where none('A'..'Z') ∈ *.comb.Set;
@@ -87,11 +87,11 @@ given $guess {
 
 
 该程序具有可扩展性， 要增加一种密码验证， 只有添加一个 subset 就好了，然后在 given/when 里面增加一个处理。
-proceed 相当于 continue， 不像 C 里面的 falling through， Perl 6 里面的 proceed 在继续执行 when 语句时会计算 when 后面的条件。
+proceed 相当于 continue， 不像 C 里面的 falling through， Raku 里面的 proceed 在继续执行 when 语句时会计算 when 后面的条件。
 
 - 检测年龄
 
-[source,perl6]
+[source,raku]
 ----
 class Person {
     has Int $.age;

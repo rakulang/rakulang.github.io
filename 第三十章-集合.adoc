@@ -85,7 +85,7 @@
 
 - 找到两个文件中共有的行
 
-[source,perl6]
+[source,raku]
 ----
 my @a := "filea".IO.lines;
 my @b := "fileb".IO.lines;

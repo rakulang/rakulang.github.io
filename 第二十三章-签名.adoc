@@ -1,8 +1,8 @@
 == 签名
 
-http://doc.perl6.org/type/Signature[签名]也是对象。
+http://doc.raku.org/type/Signature[签名]也是对象。
 
-[source,perl6]
+[source,raku]
 ----
 > sub a($a, $b) {};
 > &a.signature.perl.say
@@ -12,9 +12,9 @@ http://doc.perl6.org/type/Signature[签名]也是对象。
 :($a, $b)
 ----
 
-签名是一个对象, 就像 Perl 6 中的任何其它东西一样。 任何 **Callable** 类型中都有签名, 并且它能使用 `.signature` 方法获取到。
+签名是一个对象, 就像 Raku 中的任何其它东西一样。 任何 **Callable** 类型中都有签名, 并且它能使用 `.signature` 方法获取到。
 
-[source,perl6]
+[source,raku]
 ----
 class Signature { ... }
 ----
@@ -27,7 +27,7 @@ class Signature { ... }
 
 签名出现在子例程和方法名后面的圆括号中, 还出现在 blocks 里面的 `->` 或 `<->` 后面, 或者作为变量声明符(例如 `my` )的输入, 或者以冒号开头作为单独的项。
 
-[source,perl6]
+[source,raku]
 ----
 sub f($x) { }
 #    ^^^^ sub f 的签名
@@ -50,7 +50,7 @@ my $sig = :($a, $b);
 
 签名字面量可以用于定义回调或闭包的签名。
 
-[source,perl6]
+[source,raku]
 ----
 sub f(&c:(Int)){}
 sub will-work(Int){}
@@ -64,7 +64,7 @@ f(-> Int { 'this works too' } );
 
 签名由逗号分割的零个或多个参数组成。
 
-[source,perl6]
+[source,raku]
 ----
 :($a, @b, %c)
 sub add ($a, $b) { $a + $b }
@@ -72,7 +72,7 @@ sub add ($a, $b) { $a + $b }
 
 作为一个例外, 签名中的第一个参数后面可以跟着一个冒号而非逗号来标记方法的调用者。调用者是用于调用方法的东西, 它通常通过在签名中指定它来绑定给 **self**, 你可以更改所绑定的变量的名字。
 
-[source,perl6]
+[source,raku]
 ----
 :($a: @b, %c)  # 第一个参数是调用者
 
@@ -89,7 +89,7 @@ say Foo.whoami; # Well I'm class Foo, of course!
 
 参数可以可选地拥有一个类型约束(默认为 `Any`)。这些能用于限制函数允许的输入。
 
-[source,perl6]
+[source,raku]
 ----
 :(Int $a, Str $b)
 sub divisors (Int $n) { $_ if $n %% $_ for 1..$n }
@@ -98,7 +98,7 @@ divisors 2.5; # !!! Calling 'divisors' will never work with argument types (Rat)
 
 匿名的参数也行, 如果参数只需要它的类型约束的话。
 
-[source,perl6]
+[source,raku]
 ----
 :($, @, %a)         # 两个匿名参数和一个 "正常的(有名字的)"参数
 :(Int, Positional)  # 只有类型也行(两个参数)
@@ -106,18 +106,18 @@ sub baz (Str) {"Got a String"}
 baz("hello");
 ----
 
-类型约束也可以是类型捕获(http://doc.perl6.org/type/Signature#Type_Captures[type captures])。
+类型约束也可以是类型捕获(http://doc.raku.org/type/Signature#Type_Captures[type captures])。
 
 除了这些名义上的类型之外, 额外的约束可以以代码块的形式加到参数上, 代码块必须返回一个真值以通过类型检测。
 
-[source,perl6]
+[source,raku]
 ----
 sub f(Real $x where { $x > 0 }, Real $y where { $y >= $x }) { }
 ----
 
 事实上, where 后面不需要是一个代码块, `where`-block 右侧的任何东西都会被用于和参数智能匹配。所以你也可以这样写:
 
-[source,perl6]
+[source,raku]
 ----
 multi factorial(Int $ where 0) { 1 }
 multi factorial(Int $x) { $x * factorial($x - 1) }
@@ -125,7 +125,7 @@ multi factorial(Int $x) { $x * factorial($x - 1) }
 
 第一个还能简化为
 
-[source,perl6]
+[source,raku]
 ----
 multi factorial(0) { 1 }
 ----
@@ -136,7 +136,7 @@ multi factorial(0) { 1 }
 
 通常, 类型约束只检查传递的值是否是正确的**类型**。
 
-[source,perl6]
+[source,raku]
 ----
 sub limit-lines (Str $s, Int $limit) {
     my @lines = $s.lines;
@@ -149,7 +149,7 @@ say limit-lines "a \n b", Int # Always returns the max number of lines
 
 这样的情况, 我们其实只想处理定义了的字符串。要这样做, 我们使用 `:D` 类型约束。
 
-[source,perl6]
+[source,raku]
 ----
 sub limit-lines (Str:D $s, Int $limit) {
     ...
@@ -164,7 +164,7 @@ say limit-lines Str, 3;
 
 也有可能未定义的类型是子例程唯一有意义的接收值。这可以使用 `:U` 类型约束来约束它。例如, 我们可以把 `&limit-lines` 转换成 multi 函数以使用 `:U` 约束。
 
-[source,perl6]
+[source,raku]
 ----
 multi  limit-lines (Str $s, Int:D $limit) {
     my @lines = $s.lines;
@@ -182,7 +182,7 @@ say limit-lines "a \n b \n c", Int;      # "a \n b \n c"
 
 `-\->` 标记后面跟着一个类型会强制在子例程执行成功时进行类型检测。返回类型箭头必须放在参数列表的后面。跟在签名声明后面的 `returns` 关键字有同样的功能。`Nil` 在类型检测中被认为是定义了的。
 
-[source,perl6]
+[source,raku]
 ----
 sub foo(--> Int) { 1 };
 sub foo() returns Int { 1 };        # 同上
@@ -191,14 +191,14 @@ sub does-not-work(--> Int) { " " }; # throws X::TypeCheck::Return
 
 如果类型约束是一个常量表达式, 那么它被用于子例程的**返回值**。那个子例程中的任何**return**语句必须是不含参数的。
 
-[source,perl6]
+[source,raku]
 ----
 sub foo(--> 123) { return }
 ----
 
 `Nil` 和 `Failure` 总是被允许作为返回**类型**, 不管类型约束是什么。
 
-[source,perl6]
+[source,raku]
 ----
 sub foo(--> Int) { Nil };
 say foo.perl; # Nil
@@ -212,14 +212,14 @@ say foo.perl; # Nil
 
 它们被叫做吞噬参数, 因为它们吞完函数中的任何剩余参数, 就像有些人吞吃面条那样。
 
-[source,perl6]
+[source,raku]
 ----
 :($a, @b)  # 正好两个参数, 而第二个参数必须是 Positional 的
 :($a, *@b) # 至少一个参数, @b 吞噬完任何剩余的参数
 :(*%h)     # 没有位置参数, 除了任意数量的具名参数
 ----
 
-[source,perl6]
+[source,raku]
 ----
 sub one-arg (@)  { };
 sub slury   (*@) { };
@@ -237,7 +237,7 @@ one-arg (5,);      # ok
 
 one-arg 函数需要的参数是**一个**列表(或数组), 而不是多个参数。
 
-[source,perl6]
+[source,raku]
 ----
 > (5).WHAT.say
 (Int)
@@ -245,7 +245,7 @@ one-arg 函数需要的参数是**一个**列表(或数组), 而不是多个参�
 (List)
 ----
 
-[source,perl6]
+[source,raku]
 ----
 sub named-names (*%named-args) { %named-args.keys };
 say named-names :foo(42) :bar<hahaha>  # => foo bar
@@ -253,14 +253,14 @@ say named-names :foo(42) :bar<hahaha>  # => foo bar
 
 注意位置参数不允许出现在吞噬参数的后面:
 
-[source,perl6]
+[source,raku]
 ----
 :(*@args, $last) # !!! 不能把必要参数放在可变长度参数的后面
 ----
 
 带有一个星号的吞噬参数会通过消融一层或多层裸的可迭代对象来展平参数。 带有两个星号的吞噬参数不会展平参数：
 
-[source,perl6]
+[source,raku]
 ----
 sub a (*@a)  { @a.join("|").say };
 sub b (**@b) { @b.join("|").say };
@@ -271,13 +271,13 @@ b(1,[1,2],([3,4],5));    # 1|1 2|3 4 5
 
 通常, 吞噬参数会创建一个数组, 为每个 argument 创建一个标量容器, 并且把每个参数的值赋值给那些标量。如果在该过程中原参数也有一个中间的标量分量, 那么它在调用函数中是访问不到的。
 
-吞噬参数在和某些 link:http://doc.perl6.org/type/Signature#Parameter_Traits_and_Modifiers[traits and modifiers] 组合使用时会有特殊行为, 像下面描述的那样。
+吞噬参数在和某些 link:http://doc.raku.org/type/Signature#Parameter_Traits_and_Modifiers[traits and modifiers] 组合使用时会有特殊行为, 像下面描述的那样。
 
 === 类型捕获
 
 类型捕获允许把类型约束的说明推迟到函数被调用时。它们允许签名和函数体中的类型都可以引用。
 
-[source,perl6]
+[source,raku]
 ----
 sub f(::T $p1, T $p2, ::C) {
     # $p1 和 $p2 的类型都为 T, 但是我们还不知道具体类型是什么
@@ -298,7 +298,7 @@ say s(2);  # 10 / 2 * 2  == 10
 
 参数可以是跟位置有关的或者是具名的。所有的参数都是 positional 的, 除了吞噬型散列参数和有前置冒号标记的参数:
 
-[source,perl6]
+[source,raku]
 ----
 :($a)   # 位置参数
 :(:$a)  # 名字为 a 的具名参数
@@ -308,7 +308,7 @@ say s(2);  # 10 / 2 * 2  == 10
 
 在调用者这边, 位置参数的传递顺序和它们声明顺序相同。
 
-[source,perl6]
+[source,raku]
 ----
 sub pos($x, $y) { "x = $x y = $y" };
 pos(4, 5); #  x = 4 y = 5
@@ -316,7 +316,7 @@ pos(4, 5); #  x = 4 y = 5
 
 对于具名实参和具名形参, 只用名字用于将实参映射到形参上。
 
-[source,perl6]
+[source,raku]
 ----
 sub named(:$x, :$y) { "x=$x y=$y" }
 named( y => 5, x => 4);
@@ -324,7 +324,7 @@ named( y => 5, x => 4);
 
 具名参数也可以和变量的名字不同:
 
-[source,perl6]
+[source,raku]
 ----
 sub named(:official($private)) { "公务" if $private }
 named :official;
@@ -332,7 +332,7 @@ named :official;
 
 别名也是那样做的:
 
-[source,perl6]
+[source,raku]
 ----
 sub paint( :color(:colour($c)) ) { } # 'color' 和 'colour' 都可以
 sub paint( :color(:$colour) )    { } # same API for the caller
@@ -340,7 +340,7 @@ sub paint( :color(:$colour) )    { } # same API for the caller
 
 带有具名参数的函数可以被动态地调用, 使用 `|` 非关联化一个 Pair 来把它转换为一个具名参数。
 
-[source,perl6]
+[source,raku]
 ----
 multi f(:$named) { note &?ROUTINE.signature };
 multi f(:$also-named) { note &?ROUTINE.signature };
@@ -355,7 +355,7 @@ f |$pair; # «(:$named)␤»
 
 同样的语法也可以用于将散列转换为具名参数：
 
-[source,perl6]
+[source,raku]
 ----
 my %pairs = also-named => 4;
 f |%pairs;        # (:$also-named)
@@ -365,7 +365,7 @@ f |%pairs;        # (:$also-named)
 
 Positional 参数默认是强制的,  也可以用默认值或结尾的问号使参数成为可选的:
 
-[source,perl6]
+[source,raku]
 ----
 :(Str $id)         # 必要参数 required parameter
 :($base = 10)      # 可选参数, 默认为 10
@@ -374,7 +374,7 @@ Positional 参数默认是强制的,  也可以用默认值或结尾的问号使
 
 具名参数默认是可选的, 可以通过在参数末尾加上一个感叹号使它变成强制参数:
 
-[source,perl6]
+[source,raku]
 ----
 :(:%config)        # 可选参数
 :(:$debug = False) # 可选参数, 默认为 False
@@ -383,7 +383,7 @@ Positional 参数默认是强制的,  也可以用默认值或结尾的问号使
 
 默认值可以依靠之前的参数, 并且每次调用都会被重新计算。
 
-[source,perl6]
+[source,raku]
 ----
 :($goal, $accuracy = $goal / 100);
 :(:$excludes = ['.', '..']); # a new Array for every call
@@ -393,21 +393,21 @@ Positional 参数默认是强制的,  也可以用默认值或结尾的问号使
 
 参数后面可以跟着一个由括号括起来的 `sub-signature`, 子签名会解构给定的参数。解构的列表就是它的元素:
 
-[source,perl6]
+[source,raku]
 ----
 sub first (@array ($first, *@rest)) { $first }
 ----
 
 或
 
-[source,perl6]
+[source,raku]
 ----
 sub first ([$first, *@]) { $first }
 ----
 
 而散列的解构是它的键值对儿:
 
-[source,perl6]
+[source,raku]
 ----
 sub all-dimensions (% (:length(:$x), :width(:$y), :depth(:$z))) {
     sx andthen $y andthen $z andthen True
@@ -418,7 +418,7 @@ sub all-dimensions (% (:length(:$x), :width(:$y), :depth(:$z))) {
 
 一般地, 对象根据它的属性结构。通用的惯用法是在 *for* 循环中解包一个 `Pair`的键和值:
 
-[source,perl6]
+[source,raku]
 ----
 for @guest-list.pairs -> (:key($index), :value($guest)) {
     ...
@@ -439,7 +439,7 @@ for @guest-list.pairs -> (:key($index), :value($guest)) {
 
 `is copy` 特性让参数被复制, 并允许在子例程内部修改参数的值。
 
-[source,perl6]
+[source,raku]
 ----
 sub count-up ($x is copy) {
     $x = Inf if $x ~~ Whatever;
@@ -449,7 +449,7 @@ sub count-up ($x is copy) {
 
 `is rw` 特性让参数只绑定到变量上(或其它可写的容器)。 赋值给参数会改变调用一侧的变量的值。
 
-[source,perl6]
+[source,raku]
 ----
 sub swap($x is rw, $y is rw) {
     ($x, $y) = ($y, $x);
@@ -462,7 +462,7 @@ sub swap($x is rw, $y is rw) {
 
 ==== params 方法
 
-[source,perl6]
+[source,raku]
 ----
 method params(Signature:D:) returns Positional
 ----
@@ -471,7 +471,7 @@ method params(Signature:D:) returns Positional
 
 ==== arity 方法
 
-[source,perl6]
+[source,raku]
 ----
 method arity(Signature:D:) returns Int:D
 ----
@@ -480,7 +480,7 @@ method arity(Signature:D:) returns Int:D
 
 ==== count 方法
 
-[source,perl6]
+[source,raku]
 ----
 method count(Signature:D:) returns Real:D
 ----
@@ -491,14 +491,14 @@ method count(Signature:D:) returns Real:D
 
 签名返回的任意约束是:
 
-[source,perl6]
+[source,raku]
 ----
 :($a, $b --> Int).returns # Int
 ----
 
 ==== ACCEPTS 方法
 
-[source,perl6]
+[source,raku]
 ----
 multi method ACCEPTS(Signature:D: Capture $topic)
 multi method ACCEPTS(Signature:D: @topic)
@@ -508,7 +508,7 @@ multi method ACCEPTS(Signature:D: Signature $topic)
 
 前三个方法会看参能否绑定给 capture, 例如, 如果带有那个 Signature 的函数能使用 `$topic` 调用:
 
-[source,perl6]
+[source,raku]
 ----
 (1,2, :foo) ~~ :($a, $b, :foo($bar)) # true
 <a b c d> ~~ :(Int $a)               # False
@@ -516,7 +516,7 @@ multi method ACCEPTS(Signature:D: Signature $topic)
 
 最后一个会为真如果 `$topic` 能接收的任何东西也能被 `Signature` 接收。
 
-[source,perl6]
+[source,raku]
 ----
 :($a, $b) ~~ :($foo, $bar, $baz?)   # True
 :(Int $n) ~~ :(Str)                 # False

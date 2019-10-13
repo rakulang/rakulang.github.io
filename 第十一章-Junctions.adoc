@@ -4,14 +4,14 @@
 
 查找当前目录下的所有以 `.md` 为后缀的文件:
 
-[source,perl6]
+[source,raku]
 ----
 dir(test => all(/\.md$/))
 ----
 
 === any
 
-[source,perl6]
+[source,raku]
 ----
 my @bad_ext = ('plx', 'pm', 'pl', 'p6');
 my $file_ext = 'p6';
@@ -20,19 +20,19 @@ if lc($file_ext) eq any(@bad_ext) {
 }
 ----
 
-[source,perl6]
+[source,raku]
 ----
 (1|2|3) + 4; # any(5, 6, 7)
 ----
 
 上面的表达式相当于:
 
-[source,perl6]
+[source,raku]
 ----
 5|6|7
 ----
 
-[source,perl6]
+[source,raku]
 ----
 (1|2) + (3&4); # all(any(4, 5), any(5, 6))
 ----
@@ -44,9 +44,9 @@ if lc($file_ext) eq any(@bad_ext) {
 === one
 
 
-link:https://en.wikipedia.org/wiki/Erwin_Schr%C3%B6dinger[薛定谔欧文]应该是喜欢 Perl 6 的, 因为他的著名的link:https://en.wikipedia.org/wiki/Schr%C3%B6dinger%27s_cat[薛定谔的猫]可以用 Perl 6 的 link:https://docs.perl6.org/type/Junction[Junction] 表达:
+link:https://en.wikipedia.org/wiki/Erwin_Schr%C3%B6dinger[薛定谔欧文]应该是喜欢 Raku 的, 因为他的著名的link:https://en.wikipedia.org/wiki/Schr%C3%B6dinger%27s_cat[薛定谔的猫]可以用 Raku 的 link:https://docs.raku.org/type/Junction[Junction] 表达:
 
-[source,perl6]
+[source,raku]
 ----
 my $cat = 'dead' | 'alive';
 say "cat is both dead and alive" if $cat eq 'dead' and $cat eq 'alive';
@@ -61,7 +61,7 @@ say "cat is both dead and alive" if $cat eq 'dead' and $cat eq 'alive';
 
 拿最简单的来说, Junctions 允许你把一堆值当作单个值。例如, 你可以使用 `any` Junction 来测试一个变量是否等于所给定值中的任意一个:
 
-[source,perl6]
+[source,raku]
 ----
 say 'it matches!' if 'foo' eq 'foo' | 'bar' | 'ber';
 say 'single-digit prime' if 5 == any ^9.grep: *.is-prime;
@@ -82,7 +82,7 @@ it's in there!
 
 要从一堆值中创建一个 `any` Junction, 你可以使用 `|` 中缀操作符、调用 `any` 函数或者使用 `.any` 方法。上面的条件会返回 True 如果 Junction 中的任意一个(`any`) 值匹配所给定的值的话。事实上, 没有人能阻止你在两端都使用 Junction:
 
-[source,perl6]
+[source,raku]
 ----
 my @one = 1..10;
 my @two = 5..15;
@@ -111,7 +111,7 @@ there's overlap!
 
 使用 `all` JUnction 时要特别注意:
 
-[source,perl6]
+[source,raku]
 ----
 my @values = 2, 3, 5;
 say 'all primes' if @values.all ~~ *.is-prime;
@@ -122,7 +122,7 @@ say 'also all primes' if @moar-values.all ~~ *.is-prime;
 
 即使它没有值的时候也会返回 True, 这可能不是你想要的。在那些情况下, 你可以使用:
 
-[source,perl6]
+[source,raku]
 ----
 my @moar-values;
 say 'also all primes' if @moar-values and @moar-values.all ~~ *.is-prime; 
@@ -132,7 +132,7 @@ say 'also all primes' if @moar-values and @moar-values.all ~~ *.is-prime;
 
  你可以把 Junctions 用作并不期望 Junction 的子例程的参数。那么会发生什么呢? 对于每一个 Junctioned 的值, 那个子例程都会被调用一次, 并且返回值会是一个 Junction：
  
-[source,perl6]
+[source,raku]
 ----
  sub caculate-things($n) {
      say "$n is prime"          if $n.is-prime;
@@ -155,7 +155,7 @@ say 'EXACTLY ONE square is larger than 1e10'
 
 暴露的副作用可能有点太过神奇并且你可能不想在生产代码中看到它, 但是使用一个子例程来修改原来的 Junctioned 化的值是相当能接受的。执行一个数据库查询来获取"实际的"值并且在之后计算那个条件怎么样：
 
-[source,perl6]
+[source,raku]
 ----
 use DBIish;
 
@@ -180,7 +180,7 @@ say 'yeah, it got it, bruh' if 'meow' eq lookup @ids.any;
 
 那个游戏变化了当你的子例程正好期望一个 Junction 作为参数的时候。
 
-[source,perl6]
+[source,raku]
 ----
 sub do-stuff (Junction $n) {
     say 'value is even'  if $n %% 2;
@@ -204,7 +204,7 @@ do-stuff (2, 3, 1e11.Int).any;
 
 但是! 你没有必要非等着世界为你分发 Junctions。你自己制造一个怎么样呢, 还能在测试条件时节省代码:
 
-[source,perl6]
+[source,raku]
 ----
 sub do-stuff (*@v) {
     my $n = @v.one;
@@ -225,7 +225,7 @@ do-stuff 42;
 
 === 结论
 
-Perl 6 的 Junctions 是值的叠加态, 它允许你测试多个值就像它们是一个值一样。除了提供非常短并且易读的语法, Junctions 还允许你使用子例程变换叠加值或者使用副作用。
+Raku 的 Junctions 是值的叠加态, 它允许你测试多个值就像它们是一个值一样。除了提供非常短并且易读的语法, Junctions 还允许你使用子例程变换叠加值或者使用副作用。
 
 你还可以生成显式操作 Junctions 的子例程或者把提供的多个值转换成 Junctions 以简化代码。
 
@@ -234,7 +234,7 @@ Perl 6 的 Junctions 是值的叠加态, 它允许你测试多个值就像它们
 
 Junctions 很精彩, 使用它们, 玩的开心!
 
-[source,perl6]
+[source,raku]
 .生成含有26个英文字母和下划线的 junction
 ----
 any('A'..'Z','a'..'z','_');
@@ -248,7 +248,7 @@ any('A'..'Z','a'..'z','_');
 any(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, _)
 ----
 
-[source,perl6]
+[source,raku]
 .判断一个字符是否在某个集合中
 ----
 say so any('A'..'Z','a'..'z') ∈ set("12a34".comb); # True

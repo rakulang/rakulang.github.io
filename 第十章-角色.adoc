@@ -4,10 +4,10 @@
 
 === 角色声明
 
-声明 Roles 就像声明 Class 一样,  在 role 中声明属性和方法就像在 Perl 6 的类中声明属性和方法那样。
+声明 Roles 就像声明 Class 一样,  在 role 中声明属性和方法就像在 Raku 的类中声明属性和方法那样。
 角色使用关键字  `role` 放在所声明的角色名称前面。角色使用 `does` 关键字 mixed in,  `does` 关键字放在角色名之前。
 
-[source,perl6]
+[source,raku]
 ----
 constant dt = Date.today.DateTime;
 
@@ -24,7 +24,7 @@ role CheckingIn {
 
 角色 `CheckingIn` 声明了三个属性: `s.start`、`$.end`、`$.saturday` 和一个方法 `hello`。`does` 会把角色中的属性和方法混到类里面, 就像这些属性和方法一开始就存在于类中一样。
 
-[source,perl6]
+[source,raku]
 ----
 class JJL does CheckingIn {
     has Str $.name;
@@ -40,7 +40,7 @@ class JJL does CheckingIn {
 
 我们初始化类 `JJL` 的时候, 传递自有的属性和混合而来的属性:
 
-[source,perl6]
+[source,raku]
 ----
 my $jjl = JJL.new(
     :name('jjy')
@@ -53,7 +53,7 @@ say $jjl.working();
 
 类只须声明某些特定的属性， 例如 `JJL` 中的 `$.name`。角色中的属性可以有默认值, 角色中的方法可以有默认实现, 也可以没有默认实现。
 
-[source,perl6]
+[source,raku]
 ----
 role CheckingIn {
     method hello() { ... } 
@@ -62,7 +62,7 @@ role CheckingIn {
 
 上面的 `...` 是 yadayada 运算符, 表示不实现该方法, 只是占位符。JJL 类可以实现/覆盖角色中的方法:
 
-[source,perl6]
+[source,raku]
 ----
 class JJL does CheckingIn {
     method hello() { "implementation or overrite" }
@@ -80,7 +80,7 @@ Attribute '$!end' already exists in the class 'JJL', but a role also wishes to c
 
 类可以继承多个角色, 如果所继承的角色中有同名的属性/方法, 那么继承后就会发生冲突:
 
-[source,perl6]
+[source,raku]
 ----
 role Salary {
     has Bool $.saturday  = False;
@@ -92,7 +92,7 @@ role Salary {
 
 我们声明了一个新的角色 `Salary`, 其中  `$.saturday` 属性和 `hello()` 方法与角色 `CheckingIn` 中的同名, 我们同时继承这俩个角色:
 
-[source,perl6]
+[source,raku]
 ----
 class Employee does CheckingIn does Salary {
     has Str $.name;
@@ -129,7 +129,7 @@ Method 'hello' must be resolved by class Employee because it exists in multiple 
 
 如果你实例化角色, 那么角色会变成类:
 
-[source,perl6]
+[source,raku]
 ----
 role Point {
     has $.x;

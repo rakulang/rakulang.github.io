@@ -2,11 +2,11 @@
 
 === Whatever Star
 
-Whatever star 的名字来自于通配符。在 Perl 6 中，Whatever  star 会创建一个隐式块，可以用来代替任何需要 `Callable` 的东西。这个过程被称为 *whatever*-柯里化。以下是文档：link:https://docs.perl6.org/type/WhateverCode[WhateverCode]。
+Whatever star 的名字来自于通配符。在 Raku 中，Whatever  star 会创建一个隐式块，可以用来代替任何需要 `Callable` 的东西。这个过程被称为 *whatever*-柯里化。以下是文档：link:https://docs.raku.org/type/WhateverCode[WhateverCode]。
 
 由于各种原因，这很有用。这是一个我觉得相对简洁的例子：
 
-[source,perl6]
+[source,raku]
 ----
 1,1,*+* ...^ * >= 100
 ----
@@ -15,11 +15,11 @@ Whatever star 的名字来自于通配符。在 Perl 6 中，Whatever  star 会�
 
 === 隐式链接
 
-Perl 6 中有一个名为 `$\_` 的特殊变量。它具有类型（`Any`），并且基本上具有当下有意义的任何值。在 for 循环中，它成为循环参数，在代码块中，它成为隐式参数。它可以使用给定的构造显式设置（稍后会详细介绍）。 Perl 6 语法的一个特殊功能就是。如果没有传入左操作数，operator implicity 会调用 `$_` 上的函数。除了隐式返回语句之外，这还鼓励了一种相当优雅的方法链接形式 - 类似于 Ruby 的 link:https://ruby-doc.org/core-2.6.2/Object.html#method-i-tap[tap] 或 link:https://wiki.haskell.org/Pointfree[pointfree 样式的 Haskell]。
+Raku 中有一个名为 `$\_` 的特殊变量。它具有类型（`Any`），并且基本上具有当下有意义的任何值。在 for 循环中，它成为循环参数，在代码块中，它成为隐式参数。它可以使用给定的构造显式设置（稍后会详细介绍）。 Raku 语法的一个特殊功能就是。如果没有传入左操作数，operator implicity 会调用 `$_` 上的函数。除了隐式返回语句之外，这还鼓励了一种相当优雅的方法链接形式 - 类似于 Ruby 的 link:https://ruby-doc.org/core-2.6.2/Object.html#method-i-tap[tap] 或 link:https://wiki.haskell.org/Pointfree[pointfree 样式的 Haskell]。
 
 这是一个人为的例子：给定一个列表列表，将列表过滤到只有偶数元素并打印新列表。
 
-[source,perl6]
+[source,raku]
 ----
 > (1..2 X 1..2).map: { .grep(* %% 2).say }
 ()
@@ -30,7 +30,7 @@ Perl 6 中有一个名为 `$\_` 的特殊变量。它具有类型（`Any`），�
 
 `{ .grep(* %% 2).say }` 是一个接收隐式参数(作为 `$_` 传入)的 block, 过滤掉不能被 2 整除的元素.我们可以使用此块作为独立的 callable 用来查看此操作：
 
-[source,perl6]
+[source,raku]
 ----
 > { .grep(* %% 2).say }(1..10)
 (2 4 6 8 10)
@@ -48,7 +48,7 @@ n 的阶乘定义为 `n*(n-1)*(n-2)…*1`, 零的阶乘为1.
 
 - 使用自定义后缀操作符
 
-[source,perl6]
+[source,raku]
 ----
 sub postfix:<!>($n where $n > 0) {
     [*] 2..$n
@@ -63,22 +63,22 @@ say 5!
 ==== WHO, WHAT, WHERE, WHICH, WHY 和 HOW
 
 
-我喜欢 Perl 6 如何命名。它很可爱又愚蠢，令人难忘，描述性绝不让我感到困惑。
+我喜欢 Raku 如何命名。它很可爱又愚蠢，令人难忘，描述性绝不让我感到困惑。
 
-`WHO`，`WHAT`，`WHERE`，`WHICH`，`WHY` 和 `HOW` 是默认情况下在每个对象上定义的方法。它们促进了 Perl 6 中可能存在的大部分反射和动态。它们都是 link:https://docs.perl6.org/language/mop#Metamethods[MOP]的一部分，即 Perl 6 的元对象协议。
+`WHO`，`WHAT`，`WHERE`，`WHICH`，`WHY` 和 `HOW` 是默认情况下在每个对象上定义的方法。它们促进了 Raku 中可能存在的大部分反射和动态。它们都是 link:https://docs.raku.org/language/mop#Metamethods[MOP]的一部分，即 Raku 的元对象协议。
 
 - `WHO` 返回定义该对象的包。
 - `WHAT` 返回对象的类型。
 - `WHERE` 返回对象的地址。
 - `WHICH` 返回对象的唯一标识符。
 - `WHY` 返回有关该对象的文档。
-- `HOW` 很重要要：它返回元类对象，开发人员狡猾地命名其为高阶工作对象。它为 Perl 6 允许的所有运行时动态提供了一个接口。
+- `HOW` 很重要要：它返回元类对象，开发人员狡猾地命名其为高阶工作对象。它为 Raku 允许的所有运行时动态提供了一个接口。
 
 在对象的 `HOW` 对象上调用方法有特殊的语法，这个语法是 `.^`。
 
 以下是一些有趣的事情，你可以用 `HOW` 对象来做。使用 `my $x = "Hello, world!"` 我们可以自省它来找到它的名字，
 
-[source,perl6]
+[source,raku]
 ----
 > $x.^name
 Str
@@ -86,7 +86,7 @@ Str
 
 找到你可以在它身上调用的方法:
 
-[source,perl6]
+[source,raku]
 ----
 > $x.^methods
 (BUILD Capture Int Num chomp starts-with ends-with substr-eq contains indices index rindex pred succ comb match subst-mutate subst lines parse-base samecase samemark samespace word-by-word trim-leading trim-trailing trim words WORDS_AUTODEREF encode NFC NFD NFKC NFKD unival univals wordcase trans parse-names uniparse indent codes chars uc lc tc fc tclc flip ord WHY WHICH Bool Str Stringy DUMP ACCEPTS chop Numeric gist perl ords split substr substr-rw BUILDALL)
@@ -95,7 +95,7 @@ Str
 和它的方法解析顺序(遍历哪些类来调用此对象上的方法)
 
 
-[source,perl6]
+[source,raku]
 ----
 > $x.^mro
 ((Str) (Cool) (Any) (Mu))
@@ -103,17 +103,17 @@ Str
 
 以及更多。你甚至可以内省一个 `HOW` 对象：
 
-[source,perl6]
+[source,raku]
 ----
 > $x.HOW.^methods
 (archetypes new new_type add_fallback compose roles role_typecheck_list is_composed setup_junction_fallback find_method_fallback has_fallbacks set_name set_shortname name shortname WHY set_why ver auth api set_ver set_auth set_api add_stash add_attribute compose_attributes set_rw rw get_attribute_for_usage attributes add_method methods method_table submethod_table declares_method lookup cache cache_get cache_add add_private_method private_method_table find_private_method set_autogen_proto add_multi_method multi_methods_to_incorporate incorporate_multi_candidates add_meta_method meta_method_table compose_meta_methods add_role roles_to_compose exclude_parent add_parent parents hides hidden set_hidden set_default_parent_type has_default_parent_type get_default_parent_type compute_mro c3_merge mro mro_unhidden find_method find_method_qualified can publish_method_cache isa does type_check publish_type_cache add_trustee trusts is_trusted create_BUILDPLAN BUILDPLAN BUILDALLPLAN set_is_mixin is_mixin set_mixin_attribute mixin_attribute flush_cache setup_mixin_cache mixin generate_mixin mixin_base is_array_type array_type set_array_type get_boolification_mode set_boolification_mode publish_boolification_spec compose_repr repr_composed set_default_invoke_handler set_invocation_attr set_invocation_handler has_invocation_attr invocation_attr_class ...)
 ----
 
-通过将所有这些元方法封装到一个对象中，Perl 6 在您应该使用的方法和可以使用的方法之间进行了明显的描述。有能力做你想做的事是一件好事 - 但应谨慎使用。其他语言（看着你，Ruby）没有做出这种区分，因此经常将这些不安全的函数暴露为每个对象的一阶方法。
+通过将所有这些元方法封装到一个对象中，Raku 在您应该使用的方法和可以使用的方法之间进行了明显的描述。有能力做你想做的事是一件好事 - 但应谨慎使用。其他语言（看着你，Ruby）没有做出这种区分，因此经常将这些不安全的函数暴露为每个对象的一阶方法。
 
 === traits
 
-[source,perl6]
+[source,raku]
 ----
 class Okay {
 	has $.value is required;
@@ -142,14 +142,14 @@ nasty_function($uhoh); # After this, $uhoh.value now equals 0.
 
 它是一个运算符 `~~`，它在右手边的参数上调用 `.ACCEPTS`，并在其左手边的参数上别名 `$_`。每个对象以某种方式，形状或形式实现 `.ACCEPTS`;它的唯一目的是做它应该做的事情。
 
-听起来很模糊？确实是的。在 Perl 6 中，Smartmatch 以两种重要的方式使用：`given...when`，和匹配类型签名。
+听起来很模糊？确实是的。在 Raku 中，Smartmatch 以两种重要的方式使用：`given...when`，和匹配类型签名。
 
 
 === given/when
 
-这是 Perl 6 的 case 语句形式，但称之为 case 语句并不公平。以下是如何使用它的示例：
+这是 Raku 的 case 语句形式，但称之为 case 语句并不公平。以下是如何使用它的示例：
 
-[source,perl6]
+[source,raku]
 ----
 given $str {
 	when /hello/ { say 'user typed in "hello"' }
@@ -160,7 +160,7 @@ given $str {
 如果 `$str ~~ / hello /` 返回 True，则此块运行第一个块，如果 `$str ~~ / world /` 返回 True，则第二个块运行。在这种非常具体的情况下，这类似于 switch/case 块，但是匹配正则表达式。我们不仅限于正则表达式，我们可以混合搭配 smartmatch 接受的任何类型：
 
 
-[source,perl6]
+[source,raku]
 ----
 given $str {
 	when 10 { say 'user typed in the number 10' }
@@ -175,11 +175,11 @@ given $str {
 
 === 类型签名
 
-在 Perl 6 中，类型签名的处理方式与任何其他对象相同。可以使用 `.signature` 检查函数的类型签名，并且可以使用 `Capture` 对象上的 smartmatch 运算符 `~~` 执行运行时类型签名匹配。
+在 Raku 中，类型签名的处理方式与任何其他对象相同。可以使用 `.signature` 检查函数的类型签名，并且可以使用 `Capture` 对象上的 smartmatch 运算符 `~~` 执行运行时类型签名匹配。
 
 看看这个例子：
 
-[source,perl6]
+[source,raku]
 ----
 sub f(Int $x --> Int) {
 	$x + 1
@@ -195,7 +195,7 @@ say \('hello'.WHAT) ~~ &f.signature; # => False
 
 元运算符是能操作运算符的运算符。
 
-[source,perl6]
+[source,raku]
 ----
 qw/fun handy scalable/ Z~ qw/♥ ♥ ♥/
 ----
@@ -208,21 +208,21 @@ qw/fun handy scalable/ Z~ qw/♥ ♥ ♥/
 ----
 
 
-[source,perl6]
+[source,raku]
 ----
 qw/fun handy scalable/ X~ qw/ly able/
 ----
 
 输出:
 
-[source,perl6]
+[source,raku]
 .Output
 ----
 (funly funable handyly handyable scalablely scalableable)
 ----
 
 
-[source,perl6]
+[source,raku]
 ----
 [+] qw/1 2 3/
 [*] qw/1 2 3 4 5/

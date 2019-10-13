@@ -2,7 +2,7 @@
 
 === chars
 
-[source,perl6]
+[source,raku]
 .字符个数
 ----
 '楽土star'.chars # 6
@@ -14,9 +14,9 @@
 
 ==== 普通字符
 
-你可以把 link:http://docs.perl6.org/routine/comb[comb] 用作子例程或方法。在它的最基本的形式中， comb 会把字符串分解为字符:
+你可以把 link:http://docs.raku.org/routine/comb[comb] 用作子例程或方法。在它的最基本的形式中， comb 会把字符串分解为字符:
 
-[source,perl6]
+[source,raku]
 ----
 'foobar moobar 駱駝道bar'.comb.join('|').say;
 'foobar moobar 駱駝道bar'.comb(6).join('|').say;
@@ -32,7 +32,7 @@
 
 你也可以为 comb 提供第二个整数参数，即 **limit**，来标示每个列表中最多含有 limit 个元素:
 
-[source,perl6]
+[source,raku]
 ----
 'foobar moobar 駱駝道bar'.comb(1, 5).join('|').say;
 'foobar moobar 駱駝道bar'.comb(6, 2).join('|').say;
@@ -46,9 +46,9 @@
 
 ==== 计数
 
-comb 也接收普通的 link:http://docs.perl6.org/type/Str[Str] 作为参数，返回一个包含那个字符串的匹配的列表。所以这在计算子字符串在字符串中出现的次数时很有用。
+comb 也接收普通的 link:http://docs.raku.org/type/Str[Str] 作为参数，返回一个包含那个字符串的匹配的列表。所以这在计算子字符串在字符串中出现的次数时很有用。
 
-[source,perl6]
+[source,raku]
 ----
 'The 🐈 ran after a 🐁, but the 🐁 ran away'.comb('🐈').Int.say;
 'The 🐈 ran after a 🐁, but the 🐁 ran away'.comb('ran').Int.say;
@@ -62,7 +62,7 @@ comb 也接收普通的 link:http://docs.perl6.org/type/Str[Str] 作为参数，
 
 comb 的参数也可以是一个正则表达式，整个匹配会作为一个标量被返回：
 
-[source,perl6]
+[source,raku]
 ----
 foobar moobar 駱駝道bar'.comb(/<[a..z]>+ 'bar'/).join('|').say;
 
@@ -72,9 +72,9 @@ foobar moobar 駱駝道bar'.comb(/<[a..z]>+ 'bar'/).join('|').say;
 
 ==== 限制所匹配的东西
 
-你可以使用link:http://docs.perl6.org/language/regexes#Look-around_assertions[环视断言]或者更简单的 `<(` 和 `)>` 正则表达式捕获记号:
+你可以使用link:http://docs.raku.org/language/regexes#Look-around_assertions[环视断言]或者更简单的 `<(` 和 `)>` 正则表达式捕获记号:
 
-[source,perl6]
+[source,raku]
 ----
 'moo=meow ping=pong'.comb(/\w+    '=' <( \w**4/).join('|').say; # values
 'moo=meow ping=pong'.comb(/\w+ )> '='    \w**4/).join('|').say; # keys
@@ -90,7 +90,7 @@ foobar moobar 駱駝道bar'.comb(/<[a..z]>+ 'bar'/).join('|').say;
 
 怎么样得出 Perl 5 那样的 键/值对儿呢？
 
-[source,perl6]
+[source,raku]
 ----
 my %things = 'moo=meow ping=pong'.comb(/(\w+) '=' (\w+)/, :match)».Slip».Str;
 say %things;
@@ -99,11 +99,11 @@ say %things;
 # moo => meow, ping => pong
 ----
 
-圆括号用于捕获。`:match` 参数使 comb 返回一个 **Match** 对象的列表，而非返回一个字符串列表。下一步，我们使用两个 **hyper** 运算符把 Matches 转换为 link:http://docs.perl6.org/type/Slip[Slips]，这会给我们一个捕获的列表，但是它们仍旧是 **Match** 对象，这就是为什么我们还要把它们转换为 **Str** 的原因。
+圆括号用于捕获。`:match` 参数使 comb 返回一个 **Match** 对象的列表，而非返回一个字符串列表。下一步，我们使用两个 **hyper** 运算符把 Matches 转换为 link:http://docs.raku.org/type/Slip[Slips]，这会给我们一个捕获的列表，但是它们仍旧是 **Match** 对象，这就是为什么我们还要把它们转换为 **Str** 的原因。
 
 我们还可以使用具名捕获使代码更清晰：
 
-[source,perl6]
+[source,raku]
 ----
 my %things = 'moo=meow ping=pong'
     .comb(/$<key>=\w+ '=' $<value>=\w+/, :match)
@@ -116,7 +116,7 @@ say %things;
 
 你还可以把上面的代码写成这样：
 
-[source,perl6]
+[source,raku]
 ----
 my %things = ('moo=meow ping=pong' ~~ m:g/(\w+) '=' (\w+)/)».Slip».Str;
 say %things;
@@ -129,14 +129,14 @@ say %things;
 
 代替使用带有 :match 参数的 .comb , 你最好就使用 .match 方法好了:
 
-[source,perl6]
+[source,raku]
 ----
 'moo=meow ping=pong'.match(/(\w+) '=' (\w+)/, :g)
 ----
 
 使用正则表达式:
 
-[source,perl6]
+[source,raku]
 .comb
 ----
 my $str = 'The quick brown fox jumps over the 100 lazy dog';
@@ -147,7 +147,7 @@ $str.comb: /<:alpha>+/
 `comb` 返回一个 Seq 序列。
 
 ===  字符串截取
-[source,perl6]
+[source,raku]
 .script
 ----
 
@@ -157,9 +157,9 @@ $str.comb: /<:alpha>+/
 
 ==== subst
 
-link:https://docs.perl6.org/routine/subst[subst] 取的是单词 substitution(替换)的前5个字符, 意为替换之意。其签名为:
+link:https://docs.raku.org/routine/subst[subst] 取的是单词 substitution(替换)的前5个字符, 意为替换之意。其签名为:
 
-[source,perl6]
+[source,raku]
 ----
 multi method subst(Str:D: $matcher, $replacement, *%opts)
 ----
@@ -170,7 +170,7 @@ multi method subst(Str:D: $matcher, $replacement, *%opts)
 
 `$matcher` 可以是一个正则表达式, 或者一个字符串字面值。 Cool 类型的非字符串 matcher 会被强转为字符串以用于字面上的匹配。
 
-[source,perl6]
+[source,raku]
 .script
 ----
 my $some-string    = "Some foo";
@@ -180,7 +180,7 @@ $some-string.=subst(/foo/, "string"); # 就地替换 $some-string 现在是 'Som
 
 `replacement` 可以是一个闭包:
 
-[source,perl6]
+[source,raku]
 ----
 my $i = 41;
 my $str = "The answer is secret.";
@@ -189,7 +189,7 @@ my $real-answer = $str.subst(/secret/, {++$i}); # The answer is 42
 
 下面是 subst 其它用法的例子:
 
-[source,perl6]
+[source,raku]
 ----
 my $str = "Hey foo foo foo";
 $str.subst(/foo/, "bar", :g);         # 全局替换 - 返回 Hey bar bar bar
@@ -203,7 +203,7 @@ $str.subst(/foo/, "bar", :nth(3));    # 单独替换第 n 个匹配. 替换第�
 第三个参数传递给散列, 例如 `:g` 被吞噬参数 `*%opts` 接收, 意为 `g => True`。
 其中的 `:nth` 副词拥有可读的长得像英语那样的变体:
 
-[source,perl6]
+[source,raku]
 ----
 say 'ooooo'.subst: 'o', 'x', :1st; # xoooo
 say 'ooooo'.subst: 'o', 'x', :2nd; # oxooo
@@ -213,7 +213,7 @@ say 'ooooo'.subst: 'o', 'x', :4th; # oooxo
 
 `.subst` 是 **S** 的方法形式:
 
-[source,perl6]
+[source,raku]
 ----
 say 'meowmix'.subst: 'me', 'c';
 say 'meowmix'.subst: /m./, 'c';
@@ -257,7 +257,7 @@ subst 还支持下面的副词:
 
 在方法形式中，你必须把这些副词应用到正则表达式自身身上：
 
-[source,perl6]
+[source,raku]
 ----
 given 'Lorem Ipsum Dolor Sit Amet' {
     say .subst: /:i l/, 'b', :ii;
@@ -273,7 +273,7 @@ given 'Lorem Ipsum Dolor Sit Amet' {
 
 捕获对于替换操作来说不陌生，所以我们来尝试捕获下方法调用形式的替换：
 
-[source,perl6]
+[source,raku]
 ----
 say 'meowmix'.subst: /me (.+)/, "c$0";
 
@@ -284,9 +284,9 @@ say 'meowmix'.subst: /me (.+)/, "c$0";
 
 不是我们要找的。我们的替换字符串构建在达到 `.subst` 方法之前，并且里面的 `$0` 变量实际上指向任何这个方法调用之前的东西，而不是 `.subst` 正则表达式中的捕获。所以我们怎么来修正它呢？
 
-`.subst` 方法的第二个参数也可以接受一个 link:http://docs.perl6.org/type/Callable[Callable]。在它里面，你可以使用 `$0`, `$1`, ... `$n` 变量，直到你想要的编号，并从捕获中得到正确的值：
+`.subst` 方法的第二个参数也可以接受一个 link:http://docs.raku.org/type/Callable[Callable]。在它里面，你可以使用 `$0`, `$1`, ... `$n` 变量，直到你想要的编号，并从捕获中得到正确的值：
 
-[source,perl6]
+[source,raku]
 ----
 say 'meowmix'.subst: /me (.+)/, -> { "c$0" };
 
@@ -294,15 +294,15 @@ say 'meowmix'.subst: /me (.+)/, -> { "c$0" };
 # cowmix
 ----
 
-这里，我们为我们的 **Callable** 使用了 `-> { ... }` 尖号块儿，但是 **WhateverCode** 和子例程也有效。每次替换都会调用这个 Callable，并且把 link:hhttp://docs.perl6.org/type/Match[Match] 对象作为第一个位置参数传递给 Callable， 如果你需要访问它的话。
+这里，我们为我们的 **Callable** 使用了 `-> { ... }` 尖号块儿，但是 **WhateverCode** 和子例程也有效。每次替换都会调用这个 Callable，并且把 link:hhttp://docs.raku.org/type/Match[Match] 对象作为第一个位置参数传递给 Callable， 如果你需要访问它的话。
 
 ==== S///
 
-`S///` 操作符在 Perl 6 中是 `s///` 操作符的战友，它不是修改原来的字符串，而是拷贝原来的字符串，修改，然后返回修改过的版本。
+`S///` 操作符在 Raku 中是 `s///` 操作符的战友，它不是修改原来的字符串，而是拷贝原来的字符串，修改，然后返回修改过的版本。
 
 我们知道了 `S///` 总是作用在 `$_` 上并且返回替换后的结果，很容易就想到几种方法把 `$_` 设置为我们原来的字符串并把 `S///` 的返回值收集回来，我们来看几个例子：
 
-[source,perl6]
+[source,raku]
 ----
 my $orig = 'meowmix';
 my $new  = S/me/c/ given $orig;
@@ -333,7 +333,7 @@ cowmix
 
 `S///` 操作符 -- 就像 `s///` 操作符和某些方法一样 -- 允许你使用正则表达式副词：
 
-[source,perl6]
+[source,raku]
 ----
 given 'Lörem Ipsum Dolor Sit Amet' {
     say S:g      /m/g/;  # Löreg Ipsug Dolor Sit Aget
@@ -361,7 +361,7 @@ given 'Lörem Ipsum Dolor Sit Amet' {
 
 ==== split
 
-[source,perl6]
+[source,raku]
 .script
 ----
 'fun,handy,scalable'.split(',')
@@ -369,7 +369,7 @@ given 'Lörem Ipsum Dolor Sit Amet' {
 
 ==== join
 
-[source,perl6]
+[source,raku]
 .script
 ----
 ["fun", "handy", "scalable"].join(",")
@@ -384,7 +384,7 @@ fun,handy,scalable
 
 ==== trans
 
-[source,perl6]
+[source,raku]
 .script
 ----
 'learnable'.trans: 'ae' => 'AE' # lEArnAblE
@@ -392,7 +392,7 @@ fun,handy,scalable
 
 ==== flip
 
-[source,perl6]
+[source,raku]
 .script
 ----
 'learnable'.flip # elbanrael
@@ -400,7 +400,7 @@ fun,handy,scalable
 
 ==== trim chomp
 
-[source,perl6]
+[source,raku]
 .script
 ----
 '  learnable'.trim-leading.perl  # "learnable"
@@ -414,7 +414,7 @@ fun,handy,scalable
 
 ==== indices
 
-[source,perl6]
+[source,raku]
 .script
 ----
 'learnable'.indices('l') # (0 7)
@@ -422,7 +422,7 @@ fun,handy,scalable
 
 ==== index 
 
-[source,perl6]
+[source,raku]
 .script
 ----
 'learnable'.index('l') # 0
@@ -430,7 +430,7 @@ fun,handy,scalable
 
 ==== rindex 
 
-[source,perl6]
+[source,raku]
 .script
 ----
 'learnable'.rindex('l') # 7
@@ -438,7 +438,7 @@ fun,handy,scalable
 
 ==== starts-with 
 
-[source,perl6]
+[source,raku]
 .script
 ----
 'learnable'.starts-with('learn') # True
@@ -446,7 +446,7 @@ fun,handy,scalable
 
 ==== ends-with 
 
-[source,perl6]
+[source,raku]
 .script
 ----
 'learnable'.ends-with('able') # True
@@ -454,7 +454,7 @@ fun,handy,scalable
 
 ==== pred succ
 
-[source,perl6]
+[source,raku]
 .script
 ----
 
@@ -464,7 +464,7 @@ fun,handy,scalable
 
 ==== lines
 
-[source,perl6]
+[source,raku]
 .script
 ----
 "fun\nhandy\nscalable\nlearnable".lines.perl
@@ -472,14 +472,14 @@ fun,handy,scalable
 
 输出:
 
-[source,perl6]
+[source,raku]
 ----
 ("fun", "handy", "scalable", "learnable").Seq
 ----
 
 ==== words
 
-[source,perl6]
+[source,raku]
 .script
 ----
 'fun handy scalable learnable'.words.perl
@@ -487,14 +487,14 @@ fun,handy,scalable
 
 输出:
 
-[source,perl6]
+[source,raku]
 ----
 ("fun", "handy", "scalable", "learnable").Seq
 ----
 
 ==== contains
 
-[source,perl6]
+[source,raku]
 .script
 ----
 'learnable'.contains('able') # True
@@ -502,7 +502,7 @@ fun,handy,scalable
 
 ==== match
 
-[source,perl6]
+[source,raku]
 .script
 ----
 'learnable'.match('able')
@@ -511,7 +511,7 @@ fun,handy,scalable
 
 ==== indent
 
-[source,perl6]
+[source,raku]
 .script
 ----
 ('fun','handy','scalable','learnable')».indent(1)
@@ -526,7 +526,7 @@ fun,handy,scalable
 
 ==== uc lc tc fc tclc wordcase
 
-[source,perl6]
+[source,raku]
 .script
 ----
 'fun'.uc
@@ -541,7 +541,7 @@ fun,handy,scalable
 
 ==== 多行文本
 
-[source,perl6]
+[source,raku]
 ----
 my $string = q:to/THE END/;
 Norway
