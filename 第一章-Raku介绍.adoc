@@ -18,9 +18,9 @@ Perl 6 可以有多个实现, 其中第一个完成度最高的实现是开始�
 
 2015 年12月25日, Perl 6 的第一个稳定的规范发布了。现在完成度最高的 Perl 6 实现是 link:https://rakudo.org[Rakudo], 其使用 link:http://moarvm.org[MoarVM] 或 Java 虚拟机作为运行时环境。
 
-2019 年10月12日, Larry Wall 宣布支持把 Perl 6 [更名](https://github.com/Raku/problem-solving/pull/89#pullrequestreview-300789072)为 [Raku](https://raku.org)。
+2019 年10月12日, Larry Wall 宣布支持把 Perl 6 link:https://github.com/Raku/problem-solving/pull/89#pullrequestreview-300789072[更名]为 link:https://raku.org[Raku]。
 
-2020 年6月24日, Perl 5 社区宣布将发布 [Perl 7](https://www.perl.com/article/announcing-perl-7/)。所以, Perl 6 现在就是 Raku 了。 
+2020 年6月24日, Perl 5 社区宣布将发布 link:https://www.perl.com/article/announcing-perl-7/[Perl 7]。所以, Perl 6 现在就是 Raku 了。 
 
 :sectnums:
 == Raku 介绍
