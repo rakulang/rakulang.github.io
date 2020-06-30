@@ -239,4 +239,3 @@ shy();         # FAIL - won't be imported
     - 在 IRC 频道找个人帮你展示怎么把你的模块添加到 link:https://github.com/raku/ecosystem[ecosystem], 或者让他们是否能替你添加。
     - pull 请求被接收之后, 等个把小时。如果你的模块没有出现在  http://modules.raku.org/ , 请到 http://modules.raku.org/log/update.log 翻看log 日志文件, 以查找是否有错误。
 
-

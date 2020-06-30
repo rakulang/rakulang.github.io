@@ -84,3 +84,4 @@ key-of(%hash); # the same (for an equivalent `%hash`);
 
 
 === 散列副词
+

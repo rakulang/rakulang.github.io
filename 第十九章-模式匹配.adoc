@@ -239,3 +239,4 @@ my @celebrities = "Michael Jackson", "Taylor Swift", "MichaelCaine", "Adele Adki
 .say when $_.chars > 12 for @celebrities;  # 调用方法
 .say when /^Michael/ and $_.chars >12 for @celebrities; # 复合条件
 ----
+

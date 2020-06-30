@@ -522,4 +522,3 @@ multi method ACCEPTS(Signature:D: Signature $topic)
 :(Int $n) ~~ :(Str)                 # False
 ----
 
-

@@ -256,3 +256,4 @@ for @results -> $word {
 
 say "\n" ~ "Found {@results.elems} words in {now - INIT now} seconds";
 ----
+

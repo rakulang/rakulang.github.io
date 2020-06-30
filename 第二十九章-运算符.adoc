@@ -325,3 +325,4 @@ say 1, 2, 4, 8, 16 ... $end;
 enum DoW < Sunday Monday Tuesday Wednesday Thursday Friday Saturday >;
 say (Date.new("2019-01-01")..Date.new("2019-12-31")).grep( *.day-of-week == Saturday );
 ----
+

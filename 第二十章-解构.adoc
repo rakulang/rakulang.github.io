@@ -300,4 +300,3 @@ person's-age-and-legs                         # Call function declared above ...
 
 我发现解构参数在与数据库查询结果和 JSON 交互中非常有用。 您可以使用任何其他签名特性，包括指定类型，定义，可选性，默认值，使用别名重命名，使用子集约束或“where”从句，slurpies 等。
 
-

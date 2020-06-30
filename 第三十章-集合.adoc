@@ -91,3 +91,4 @@ my @a := "filea".IO.lines;
 my @b := "fileb".IO.lines;
 .say for keys( @a ∩ @b );
 ----
+
